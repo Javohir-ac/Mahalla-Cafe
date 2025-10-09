@@ -26,15 +26,16 @@
     "react-scroll": "^1.9.3",
     "recharts": "^3.2.1",
     "sass": "^1.93.2",
+    "serve": "^14.2.5",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "prestart": "echo '🚀 Frontend server production rejimda ishga tushmoqda...'",
+    "start": "serve -s build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "prestart": "echo '🚀 Frontend server http://localhost:3000 da ishga tushmoqda...'"
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
