@@ -46,9 +46,9 @@ const ContactSection: React.FC = () => {
 
       const BASE_URL =
         process.env.REACT_APP_API_URL ||
-        'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com'
+        'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com/api'
 
-      const response = await fetch(`${BASE_URL}/api/send-telegram`, {
+      const response = await fetch(`${BASE_URL}/send-telegram`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),

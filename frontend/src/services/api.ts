@@ -5,7 +5,7 @@ import axios from 'axios'
 
 // Create axios instance with default config
 const BASE_URL =
-  process.env.REACT_APP_API_BASE_URL ||
+  process.env.REACT_APP_API_URL ||
   'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com/api'
 
 const apiClient = axios.create({
