@@ -1,33 +1,10 @@
 {
   "name": "mahalla-cafe",
   "version": "1.0.0",
+  "private": true,
   "description": "Mahalla Cafe - Restaurant Management System",
-  "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "dev:frontend": "cd frontend && npm start",
-    "dev:backend": "cd backend && npm run dev",
-    "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd backend && npm start",
-    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install && cd ..",
-    "postinstall": "echo 'Mahalla Cafe dependencies installed successfully! Run \"npm run dev\" to start the application.'"
-  },
-  "devDependencies": {
-    "@types/react-scroll": "^1.8.10",
-    "concurrently": "^8.2.0"
-  },
-  "dependencies": {
-    "@fontsource/playfair-display": "^5.2.8",
-    "@fontsource/poppins": "^5.2.7",
-    "bcryptjs": "^3.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.19.0",
-    "multer": "^2.0.2",
-    "react-international-phone": "^4.6.0",
-    "react-scroll": "^1.9.3"
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "postinstall": "echo '✅ Barcha dependencylar o‘rnatildi! Frontend uchun → cd frontend && npm start | Backend uchun → cd backend && npm run dev'"
   }
 }

@@ -6,7 +6,6 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "dev:verbose": "nodemon src/server.js | echo 'Backend server yuklanmoqda...'",
     "test:api": "node test-api.js",
     "test:image": "node test-image-upload.js"
   },
