@@ -5,7 +5,6 @@ import { PhoneInput } from 'react-international-phone'
 import 'react-international-phone/style.css'
 import { useAlert } from '../contexts/AlertContext'
 import styles from '../pages/Home.module.scss'
-import { formatContactMessage, sendTelegramMessage } from '../utils/telegramUtils'
 
 interface FormData {
   name: string
@@ -37,35 +36,50 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      // Format the message for Telegram with proper escaping
-      const message = formatContactMessage(formData)
+      const message = `
+✉️ Yangi aloqa xabari:
+👤 Ism: ${formData.name}
+📞 Telefon: ${formData.phone}
+📧 Email: ${formData.email}
+💬 Xabar: ${formData.message}
+      `
 
-      // Send message to Telegram with HTML parsing to avoid markdown issues
-      const result = await sendTelegramMessage({
-        text: message,
-        parseMode: 'HTML',
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/send-telegram`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
       })
 
-      if (result.success) {
-        addAlert({
-          type: 'success',
-          title: 'Muvaffaqiyat!',
-          message: '✅ Xabaringiz muvaffaqiyatli yuborildi!',
-          duration: 5000,
-        })
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          addAlert({
+            type: 'success',
+            title: 'Muvaffaqiyat!',
+            message: '✅ Xabaringiz muvaffaqiyatli yuborildi!',
+            duration: 5000,
+          })
 
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          message: '',
-        })
+          // Reset form
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            message: '',
+          })
+        } else {
+          addAlert({
+            type: 'error',
+            title: 'Xatolik!',
+            message: result.message || 'Xabarni yuborishda xatolik yuz berdi',
+            duration: 5000,
+          })
+        }
       } else {
         addAlert({
           type: 'error',
           title: 'Xatolik!',
-          message: result.message || 'Xabarni yuborishda xatolik yuz berdi',
+          message: 'Xabarni yuborishda xatolik yuz berdi',
           duration: 5000,
         })
       }

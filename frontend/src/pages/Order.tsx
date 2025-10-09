@@ -6,7 +6,6 @@ import 'react-international-phone/style.css'
 import { Link } from 'react-router-dom'
 import ImageLoader from '../components/ImageLoader'
 import { useAlert } from '../contexts/AlertContext'
-import { sendTelegramMessage } from '../utils/telegramUtils'
 import styles from './Order.module.scss'
 
 interface CartItem {
@@ -141,14 +140,6 @@ const Order: React.FC = () => {
       })
 
       // Format message for Telegram
-      const payload = {
-        name: orderData.fullName,
-        phone: orderData.phone,
-        address: orderData.address,
-        product: 'Buyurtma',
-        note: orderData.note,
-      }
-
       // Convert cart items to the format expected by the formatter
       const formattedCartItems = cartItems.map(item => ({
         title: item.title,
@@ -160,78 +151,71 @@ const Order: React.FC = () => {
       const isNow = new Date(orderData.orderTime) <= new Date()
       const orderTimeDisplay = isNow ? 'Hozir' : 'Keyinroq'
 
-      // Create custom message format
+      // Create cart details
       let cartDetails = ''
       if (formattedCartItems && formattedCartItems.length > 0) {
-        cartDetails = '\n\n<b>🛍️ Buyurtmalar:</b>'
+        cartDetails = '\n\n🛍️ Buyurtmalar:'
         formattedCartItems.forEach((item, index) => {
-          const escapedTitle = item.title
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/&/g, '&amp;')
-          cartDetails += `\n  ${index + 1}. ${escapedTitle} - ${
+          cartDetails += `\n  ${index + 1}. ${item.title} - ${
             item.quantity
           } dona - $${item.price.toFixed(2)}`
         })
       }
 
-      const messageText = `<b>📦 Yangi buyurtma!</b>
-<b>Ism:</b> ${payload.name
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/&/g, '&amp;')}
-<b>Telefon raqam:</b> ${payload.phone
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/&/g, '&amp;')}
-<b>Manzil:</b> ${payload.address
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/&/g, '&amp;')}
-<b>Buyurtma vaqti:</b> ${orderTimeDisplay} (${orderTimeFormatted})
-<b>Maxsus so‘rov:</b> ${
-        payload.note
-          ? payload.note
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .replace(/&/g, '&amp;')
-          : "Yo'q"
-      }${cartDetails}`
+      const message = `
+📦 Yangi buyurtma!
+👤 Ism: ${orderData.fullName}
+📞 Telefon: ${orderData.phone}
+📍 Manzil: ${orderData.address}
+🕒 Buyurtma vaqti: ${orderTimeDisplay} (${orderTimeFormatted})
+📝 Maxsus so‘rov: ${orderData.note || "Yo'q"}${cartDetails}
+      `
 
-      const telegramResult = await sendTelegramMessage({
-        text: messageText,
-        parseMode: 'HTML',
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/send-telegram`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
       })
 
-      if (telegramResult.success) {
-        addAlert({
-          type: 'success',
-          title: 'Muvaffaqiyat!',
-          message: '✅ Buyurtma muvaffaqiyatli yuborildi!',
-          duration: 5000,
-        })
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          addAlert({
+            type: 'success',
+            title: 'Muvaffaqiyat!',
+            message: '✅ Buyurtma muvaffaqiyatli yuborildi!',
+            duration: 5000,
+          })
 
-        // Clear cart after confirmation
-        setCartItems([])
-        localStorage.removeItem('mahallaCart')
+          // Clear cart after confirmation
+          setCartItems([])
+          localStorage.removeItem('mahallaCart')
 
-        // Update navbar cart count
-        const event = new CustomEvent('cartUpdated', { detail: { count: 0 } })
-        window.dispatchEvent(event)
+          // Update navbar cart count
+          const event = new CustomEvent('cartUpdated', { detail: { count: 0 } })
+          window.dispatchEvent(event)
 
-        // Reset form
-        setOrderData({
-          fullName: '',
-          phone: '',
-          address: '',
-          orderTime: '',
-          note: '',
-        })
+          // Reset form
+          setOrderData({
+            fullName: '',
+            phone: '',
+            address: '',
+            orderTime: '',
+            note: '',
+          })
+        } else {
+          addAlert({
+            type: 'error',
+            title: 'Xatolik!',
+            message: result.message || 'Buyurtmani yuborishda xatolik yuz berdi',
+            duration: 5000,
+          })
+        }
       } else {
         addAlert({
           type: 'error',
           title: 'Xatolik!',
-          message: telegramResult.message || 'Buyurtmani yuborishda xatolik yuz berdi',
+          message: 'Buyurtmani yuborishda xatolik yuz berdi',
           duration: 5000,
         })
       }

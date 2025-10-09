@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { PhoneInput } from 'react-international-phone'
 import 'react-international-phone/style.css'
 import { useAlert } from '../contexts/AlertContext'
-import { formatReservationMessage, sendTelegramMessage } from '../utils/telegramUtils'
 import styles from './Reservation.module.scss'
 
 const Reservation: React.FC = () => {
@@ -34,162 +33,67 @@ const Reservation: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const payload = {
-        fullName: formData.fullName?.trim() || '',
-        phone: formData.phone?.trim() || '',
-        date: formData.date?.trim() || '',
-        time: formData.time?.trim() || '',
-        guests: formData.guests?.toString().trim() || '',
-        tableType: formData.tableType?.trim() || '',
-        comment: formData.comment?.trim() || '',
-      }
-      console.log('[Reservation] Outgoing payload:', payload)
+      const message = `
+🪑 Yangi rezervatsiya!
+👤 Ism: ${formData.fullName}
+📞 Telefon: ${formData.phone}
+📅 Sana: ${formData.date}
+🕒 Vaqt: ${formData.time}
+👥 Odamlar soni: ${formData.guests}
+🪑 Joy turi: ${formData.tableType}
+📝 Izoh: ${formData.comment || "Yo'q"}
+      `
 
-      const response = await fetch('/api/reservation', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/send-telegram`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message }),
       })
 
-      let result: any = { success: false, message: '' }
-      try {
-        result = await response.json()
-      } catch (err) {
-        console.error('[Reservation] Failed to parse JSON response')
-      }
-      console.log('[Reservation] Response status:', response.status)
-      console.log('[Reservation] Response body:', result)
-
-      // Check both HTTP status and result success flag
-      if (response.ok && result.success) {
-        addAlert({
-          type: 'success',
-          title: 'Muvaffaqiyat!',
-          message: result.message || 'Stol buyurtmangiz muvaffaqiyatli yuborildi!',
-          duration: 5000,
-        })
-        // Reset form
-        setFormData({
-          fullName: '',
-          phone: '',
-          date: '',
-          time: '',
-          guests: '',
-          tableType: '',
-          comment: '',
-        })
+      if (response.ok) {
+        const result = await response.json()
+        if (result.success) {
+          addAlert({
+            type: 'success',
+            title: 'Muvaffaqiyat!',
+            message: '✅ Stol buyurtmangiz muvaffaqiyatli yuborildi!',
+            duration: 5000,
+          })
+          // Reset form
+          setFormData({
+            fullName: '',
+            phone: '',
+            date: '',
+            time: '',
+            guests: '',
+            tableType: '',
+            comment: '',
+          })
+        } else {
+          addAlert({
+            type: 'error',
+            title: 'Xatolik!',
+            message: result.message || 'Buyurtmani yuborishda xatolik yuz berdi',
+            duration: 5000,
+          })
+        }
       } else {
-        // Fallback to direct Telegram API if backend fails
-        console.log('[Reservation] Backend failed, trying direct Telegram API')
-        const messagePayload = {
-          name: payload.fullName,
-          phone: payload.phone,
-          date: payload.date,
-          time: payload.time,
-          guests: payload.guests,
-          tableType: payload.tableType,
-          comment: payload.comment,
-        }
-
-        const messageText = formatReservationMessage(messagePayload)
-        const telegramResult = await sendTelegramMessage({
-          text: messageText,
-          parseMode: 'Markdown',
-        })
-
-        if (telegramResult.success) {
-          addAlert({
-            type: 'success',
-            title: 'Muvaffaqiyat!',
-            message: '✅ Stol buyurtmangiz muvaffaqiyatli yuborildi!',
-            duration: 5000,
-          })
-          // Reset form
-          setFormData({
-            fullName: '',
-            phone: '',
-            date: '',
-            time: '',
-            guests: '',
-            tableType: '',
-            comment: '',
-          })
-        } else {
-          addAlert({
-            type: 'error',
-            title: 'Xatolik!',
-            message: telegramResult.message || 'Buyurtmani yuborishda xatolik yuz berdi',
-            duration: 5000,
-          })
-        }
-      }
-    } catch (error) {
-      console.error('[Reservation] Submit error:', error)
-      // Fallback to direct Telegram API if backend fails
-      try {
-        const payload = {
-          fullName: formData.fullName?.trim() || '',
-          phone: formData.phone?.trim() || '',
-          date: formData.date?.trim() || '',
-          time: formData.time?.trim() || '',
-          guests: formData.guests?.toString().trim() || '',
-          tableType: formData.tableType?.trim() || '',
-          comment: formData.comment?.trim() || '',
-        }
-
-        const messagePayload = {
-          name: payload.fullName,
-          phone: payload.phone,
-          date: payload.date,
-          time: payload.time,
-          guests: payload.guests,
-          tableType: payload.tableType,
-          comment: payload.comment,
-        }
-
-        const messageText = formatReservationMessage(messagePayload)
-        const telegramResult = await sendTelegramMessage({
-          text: messageText,
-          parseMode: 'Markdown',
-        })
-
-        if (telegramResult.success) {
-          addAlert({
-            type: 'success',
-            title: 'Muvaffaqiyat!',
-            message: '✅ Stol buyurtmangiz muvaffaqiyatli yuborildi!',
-            duration: 5000,
-          })
-          // Reset form
-          setFormData({
-            fullName: '',
-            phone: '',
-            date: '',
-            time: '',
-            guests: '',
-            tableType: '',
-            comment: '',
-          })
-        } else {
-          addAlert({
-            type: 'error',
-            title: 'Xatolik!',
-            message: telegramResult.message || 'Buyurtmani yuborishda xatolik yuz berdi',
-            duration: 5000,
-          })
-        }
-      } catch (telegramError) {
-        console.error('[Reservation] Telegram fallback error:', telegramError)
         addAlert({
           type: 'error',
           title: 'Xatolik!',
-          message:
-            "Buyurtmani yuborishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.",
+          message: 'Buyurtmani yuborishda xatolik yuz berdi',
           duration: 5000,
         })
       }
+    } catch (error) {
+      console.error('[Reservation] Submit error:', error)
+      addAlert({
+        type: 'error',
+        title: 'Xatolik!',
+        message:
+          "Buyurtmani yuborishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.",
+        duration: 5000,
+      })
     } finally {
       setIsSubmitting(false)
     }

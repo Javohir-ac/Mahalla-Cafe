@@ -180,7 +180,50 @@ const handleReservationSubmission = async (req, res) => {
   }
 }
 
+/**
+ * Handle sending Telegram messages through backend
+ * @param {import('express').Request} req
+ * @param {import('express').Response} res
+ */
+const sendTelegramMessageHandler = async (req, res) => {
+  try {
+    const { message } = req.body
+
+    if (!message) {
+      return res.status(400).json({
+        success: false,
+        message: 'Xabar maydoni talab qilinadi',
+      })
+    }
+
+    // Send message to Telegram
+    const result = await sendTelegramMessage({
+      text: message,
+      parseMode: 'HTML',
+    })
+
+    if (result && result.success) {
+      return res.status(200).json({
+        success: true,
+        message: '✅ Xabar muvaffaqiyatli yuborildi',
+      })
+    } else {
+      return res.status(500).json({
+        success: false,
+        message: result.message || 'Xabarni yuborishda xatolik yuz berdi',
+      })
+    }
+  } catch (error) {
+    console.error('❌ Error sending Telegram message:', error)
+    return res.status(500).json({
+      success: false,
+      message: '❌ Xabar yuborishda xatolik yuz berdi',
+    })
+  }
+}
+
 module.exports = {
   handleOrderSubmission,
   handleReservationSubmission,
+  sendTelegramMessageHandler,
 }
