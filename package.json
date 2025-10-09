@@ -5,6 +5,9 @@
   "description": "Mahalla Cafe - Restaurant Management System",
   "scripts": {
     "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
-    "postinstall": "echo '✅ Barcha dependencylar o‘rnatildi! Frontend uchun → cd frontend && npm start | Backend uchun → cd backend && npm run dev'"
+    "postinstall": "echo ✅ Barcha dependencylar o'rnatildi! Frontend uchun: cd frontend && npm start ^| Backend uchun: cd backend && npm run dev"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.2.7"
   }
 }

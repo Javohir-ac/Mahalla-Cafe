@@ -40,26 +40,19 @@ const dashboardRoutes = require('./routes/dashboard.routes')
 const app = express()
 const PORT = process.env.PORT || 5000
 
-// CORS configuration based on environment
-const corsOptions = {
-  credentials: true,
-  optionsSuccessStatus: 200,
-}
+// CORS configuration - Updated for Render deployment
+const allowedOrigins = [
+  'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com',
+  'http://localhost:3000',
+]
 
-// Set origin based on environment
-if (process.env.NODE_ENV === 'production') {
-  // In production, you would set your actual domain
-  corsOptions.origin = process.env.FRONTEND_URL || 'http://localhost:3000'
-} else {
-  // In development, allow localhost:3000
-  corsOptions.origin = 'http://localhost:3000'
-}
-
-// Remove console.log statements for production
-// console.log(`🔧 CORS configured for origin: ${corsOptions.origin}`)
-// console.log(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`)
-
-app.use(cors(corsOptions))
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+    optionsSuccessStatus: 200,
+  })
+)
 
 // Middleware
 app.use(express.json())

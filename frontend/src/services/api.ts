@@ -4,8 +4,12 @@
 import axios from 'axios'
 
 // Create axios instance with default config
+const BASE_URL =
+  process.env.REACT_APP_API_BASE_URL ||
+  'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com/api'
+
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api',
+  baseURL: BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

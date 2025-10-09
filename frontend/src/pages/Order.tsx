@@ -171,7 +171,11 @@ const Order: React.FC = () => {
 📝 Maxsus so‘rov: ${orderData.note || "Yo'q"}${cartDetails}
       `
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/send-telegram`, {
+      const BASE_URL =
+        process.env.REACT_APP_API_URL ||
+        'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com'
+
+      const response = await fetch(`${BASE_URL}/api/send-telegram`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message }),
