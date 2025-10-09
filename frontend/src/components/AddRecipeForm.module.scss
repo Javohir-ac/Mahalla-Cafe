@@ -1,0 +1,455 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+
+  @include respond-to(xs) {
+    padding: 0.5rem;
+  }
+}
+
+.formContainer {
+  background: linear-gradient(135deg, #fff8f0 0%, #ffffff 100%);
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @include respond-to(xs) {
+    max-height: 95vh;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b4513;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1) rotate(90deg);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.title {
+  color: #8b4513;
+  margin: 0;
+  padding: 2rem 2rem 1rem;
+  font-size: 1.8rem;
+  text-align: center;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  @include respond-to(xs) {
+    font-size: 1.5rem;
+    padding: 1.5rem 1rem 0.5rem;
+  }
+}
+
+.form {
+  padding: 0 2rem 2rem;
+  overflow-y: auto;
+  flex: 1;
+
+  @include respond-to(xs) {
+    padding: 0 1rem 1.5rem;
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+    font-size: 1rem;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 12px;
+  color: #8b4513;
+  z-index: 1;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+  &:focus {
+    outline: none;
+    border-color: #8b4513;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+  }
+
+  &:hover {
+    border-color: #a0522d;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.select {
+  padding-left: 2.5rem;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+}
+
+.textarea {
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.error {
+  border-color: #f44336 !important;
+  box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1) !important;
+}
+
+.errorMessage {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  @include respond-to(xs) {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+
+  label {
+    margin: 0;
+  }
+}
+
+.addButton {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(139, 69, 19, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.ingredientsList,
+.stepsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ingredientRow,
+.stepRow {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+
+  @include respond-to(xs) {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+.quantityInput {
+  width: 120px;
+
+  @include respond-to(xs) {
+    width: 100%;
+  }
+}
+
+.stepNumber {
+  min-width: 30px;
+  height: 30px;
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+}
+
+.removeButton {
+  background: #f44336;
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+
+  &:hover {
+    background: #d32f2f;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  @include respond-to(xs) {
+    width: 100%;
+    height: 40px;
+  }
+}
+
+.imageUpload {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.5);
+
+  &:hover {
+    border-color: #8b4513;
+    background: rgba(139, 69, 19, 0.05);
+  }
+
+  &.hasPreview {
+    padding: 0;
+    border: none;
+  }
+
+  @include respond-to(xs) {
+    padding: 1rem;
+  }
+}
+
+.fileInput {
+  display: none;
+}
+
+.imagePreview {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.imagePlaceholder {
+  p {
+    color: #795548;
+    margin: 1rem 0;
+  }
+}
+
+.uploadButton {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(139, 69, 19, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+
+  @include respond-to(xs) {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+.cancelButton,
+.submitButton {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  @include respond-to(xs) {
+    width: 100%;
+  }
+}
+
+.cancelButton {
+  background: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+
+  &:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.submitButton {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  border: none;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(139, 69, 19, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Custom scrollbar
+.form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form::-webkit-scrollbar-track {
+  background: rgba(139, 69, 19, 0.05);
+  border-radius: 4px;
+}
+
+.form::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  border-radius: 4px;
+
+  &:hover {
+    background: linear-gradient(135deg, #a0522d, #8b4513);
+  }
+}
+
+// Responsive adjustments
+@include respond-to(xs) {
+  .formRow {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .quantityInput {
+    width: 100%;
+  }
+
+  .ingredientRow,
+  .stepRow {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .removeButton {
+    width: 100%;
+    height: 40px;
+  }
+}

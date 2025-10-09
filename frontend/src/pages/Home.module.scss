@@ -1,0 +1,446 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.home {
+  width: 100%;
+}
+
+.section {
+  padding: clamp(3rem, 5vw, 5rem) 0;
+  // Ensure no margin that could create gaps
+  margin: 0;
+
+  // Reduce padding on responsive views to eliminate gap
+  @media (max-width: 768px) {
+    padding: clamp(2rem, 4vw, 3rem) 0;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: clamp(1.5rem, 3vw, 2rem) 0;
+    margin: 0;
+  }
+}
+
+.container {
+  width: 100%;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  // Ensure proper box sizing
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* About Section */
+.aboutSection {
+  background-color: #fff8f0;
+  padding: clamp(4rem, 6vw, 6rem) 0;
+
+  .sectionTitle {
+    text-align: center;
+    font-family: $font-secondary;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, $primary-color, $secondary-color);
+      border-radius: 3px;
+    }
+  }
+
+  .aboutContent {
+    display: flex;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+    }
+  }
+
+  .aboutText {
+    flex: 1;
+
+    .paragraph {
+      font-family: $font-primary;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      line-height: 1.7;
+      color: $text-color;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .aboutImage {
+    flex: 1;
+    border-radius: $border-radius-lg;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+
+      &:hover {
+        transform: scale(1.03);
+      }
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
+
+/* Contact Section */
+.contactSection {
+  padding: clamp(4rem, 6vw, 6rem) 0;
+  background-color: #fff;
+  // Ensure proper width on all screen sizes
+  width: 100%;
+  box-sizing: border-box;
+
+  .sectionTitle {
+    text-align: center;
+    font-family: $font-secondary;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: $text-color;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    position: relative;
+    // Ensure proper width on all screen sizes
+    width: 100%;
+    box-sizing: border-box;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, $primary-color, $secondary-color);
+      border-radius: 3px;
+    }
+  }
+
+  .contactContent {
+    display: flex;
+    gap: clamp(1.5rem, 3vw, 2rem); // Reduced gap between contact info and form
+    align-items: flex-start;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+  }
+
+  .contactInfo {
+    flex: 1;
+    // Ensure proper width on all screen sizes
+    width: 100%;
+    box-sizing: border-box;
+
+    .contactItem {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: clamp(1.5rem, 3vw, 2rem);
+      align-items: flex-start;
+      // Ensure proper alignment on all screen sizes
+      width: 100%;
+      box-sizing: border-box;
+
+      .icon {
+        color: $primary-color;
+        flex-shrink: 0;
+        margin-top: 0.3rem;
+      }
+
+      h3 {
+        font-family: $font-primary;
+        font-size: clamp(1rem, 2vw, 1.1rem);
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: 0.3rem;
+        // Ensure proper text alignment
+        width: 100%;
+        text-align: left;
+      }
+
+      p {
+        font-family: $font-primary;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        color: $text-light;
+        line-height: 1.6;
+        // Ensure proper text alignment
+        width: 100%;
+        text-align: left;
+      }
+    }
+
+    .socialLinks {
+      margin-top: clamp(2rem, 3vw, 2rem);
+      // Ensure proper alignment on all screen sizes
+      width: 100%;
+      box-sizing: border-box;
+
+      h3 {
+        font-family: $font-primary;
+        font-size: clamp(1rem, 2vw, 1.1rem);
+        font-weight: 600;
+        color: $text-color;
+        margin-bottom: 1rem;
+        // Ensure proper text alignment
+        text-align: left;
+      }
+
+      .icons {
+        display: flex;
+        gap: 1rem;
+        // Ensure proper alignment
+        justify-content: flex-start;
+
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, $primary-color, $secondary-color);
+          color: white;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+          }
+        }
+      }
+    }
+  }
+
+  .contactForm {
+    flex: 1;
+    // Ensure proper width on all screen sizes
+    width: 100%;
+    box-sizing: border-box;
+
+    form {
+      background: #fff8f0;
+      padding: clamp(1.5rem, 3vw, 2rem);
+      border-radius: $border-radius-lg;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      margin: 0 auto;
+      max-width: 100%;
+      width: 100%; // Ensure form takes full width
+      box-sizing: border-box; // Include padding in width calculation
+      // Ensure proper alignment
+      text-align: center;
+    }
+
+    .formGroup {
+      margin-bottom: clamp(0.8rem, 2vw, 1rem);
+      // Ensure proper alignment on all screen sizes
+      width: 100%;
+      box-sizing: border-box;
+
+      label {
+        display: block;
+        font-family: $font-primary;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        font-weight: 500;
+        color: $text-color;
+        margin-bottom: 0.3rem;
+        // Ensure proper text alignment
+        text-align: left;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: clamp(0.7rem, 2vw, 1rem);
+        border: 1px solid #ddd;
+        border-radius: $border-radius-md;
+        font-family: $font-primary;
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        // Ensure proper alignment and spacing
+        margin: 0 auto;
+        display: block;
+        // Ensure proper text alignment
+        text-align: left;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+      }
+
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+    }
+
+    .submitButton {
+      @include button-primary;
+      width: 100%;
+      padding: clamp(0.8rem, 2vw, 1rem);
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      font-weight: 600;
+      border-radius: $border-radius-md;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
+      // Ensure proper text display on all screen sizes
+      white-space: normal;
+      line-height: 1.2;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(139, 69, 19, 0.3);
+      }
+
+      &:active {
+        transform: translateY(-1px);
+      }
+    }
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .aboutSection,
+  .contactSection {
+    .sectionTitle {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+    }
+
+    .contactContent {
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutSection,
+  .contactSection {
+    .sectionTitle {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+    }
+  }
+
+  .contactSection {
+    .contactContent {
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .contactInfo {
+      .contactItem {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+    }
+
+    // Ensure proper responsive behavior
+    .contactInfo,
+    .contactForm {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutSection,
+  .contactSection {
+    .sectionTitle {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+
+    .contactContent {
+      gap: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .contactInfo {
+      .contactItem {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 0.8rem;
+
+        .icon {
+          margin-top: 0.2rem;
+        }
+
+        h3 {
+          font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        p {
+          font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+      }
+
+      .socialLinks {
+        margin-top: clamp(1.5rem, 3vw, 1.5rem);
+
+        h3 {
+          font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+
+        .icons {
+          gap: 0.8rem;
+
+          a {
+            width: 36px;
+            height: 36px;
+          }
+        }
+      }
+    }
+
+    .contactForm {
+      .formGroup {
+        margin-bottom: clamp(0.5rem, 2vw, 0.7rem);
+
+        label {
+          font-size: clamp(0.8rem, 2vw, 0.85rem);
+          margin-bottom: 0.2rem;
+        }
+
+        input,
+        textarea {
+          padding: clamp(0.4rem, 2vw, 0.6rem);
+          font-size: clamp(0.8rem, 2vw, 0.85rem);
+        }
+      }
+
+      .submitButton {
+        padding: clamp(0.6rem, 2vw, 0.8rem);
+        font-size: clamp(0.85rem, 2vw, 0.9rem);
+        // Ensure proper text display on small screens
+        white-space: normal;
+        line-height: 1.2;
+      }
+    }
+  }
+}

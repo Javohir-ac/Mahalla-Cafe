@@ -1,0 +1,391 @@
+.container {
+  padding: 0;
+  animation: dashboardWowEffect 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.header {
+  margin-bottom: 2rem;
+
+  h1 {
+    color: #8b4513;
+    margin: 0 0 0.5rem 0;
+    font-size: 2rem;
+  }
+
+  p {
+    color: #795548;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  padding: 1.25rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-left: 4px solid #8b4513;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.05) 0%, transparent 100%);
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+
+    .cardIcon {
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+}
+
+.cardIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(139, 69, 19, 0.3);
+}
+
+.cardContent {
+  flex: 1;
+  z-index: 1;
+}
+
+.cardContent h3 {
+  margin: 0 0 0.5rem 0;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cardValue {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #333;
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cardChange {
+  font-size: 0.85rem;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.chartsSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.chartCard {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.03) 0%, transparent 100%);
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.cardHeader {
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+
+  h2 {
+    margin: 0;
+    color: #8b4513;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+.chartContainer {
+  height: 300px;
+  position: relative;
+  z-index: 1;
+}
+
+.bottomSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.popularItems {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #8b4513, #d2691e);
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.recentActivity {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139, 69, 19, 0.03) 0%, transparent 100%);
+    z-index: 0;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 12px;
+  background: #fff8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(139, 69, 19, 0.05) 0%, transparent 100%);
+    z-index: -1;
+  }
+
+  &:hover {
+    background: #f5f5f5;
+    transform: translateX(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.activityIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-right: 1rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(139, 69, 19, 0.2);
+}
+
+.activityContent {
+  flex: 1;
+  z-index: 1;
+
+  h4 {
+    margin: 0 0 0.25rem 0;
+    color: #333;
+    font-size: 1rem;
+  }
+
+  p {
+    margin: 0 0 0.25rem 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .time {
+    font-size: 0.8rem;
+    color: #999;
+  }
+}
+
+// Animations
+@keyframes dashboardWowEffect {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1279px) {
+  .chartsSection {
+    grid-template-columns: 1fr;
+  }
+
+  .bottomSection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .chartCard,
+  .popularItems,
+  .recentActivity {
+    padding: 1.25rem;
+  }
+
+  .statCard {
+    padding: 1rem;
+  }
+
+  .cardContent h3 {
+    font-size: 0.9rem;
+  }
+
+  .cardValue {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+  }
+
+  .header h1 {
+    font-size: 1.75rem;
+  }
+
+  .header p {
+    font-size: 1rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .chartCard,
+  .popularItems,
+  .recentActivity {
+    padding: 1rem;
+  }
+
+  .chartsSection,
+  .bottomSection {
+    gap: 1rem;
+  }
+
+  .cardHeader h2 {
+    font-size: 1.25rem;
+  }
+
+  .activityItem {
+    padding: 0.75rem;
+  }
+
+  .activityIcon {
+    width: 32px;
+    height: 32px;
+    margin-right: 0.75rem;
+  }
+
+  .activityContent h4 {
+    font-size: 0.9rem;
+  }
+
+  .activityContent p {
+    font-size: 0.8rem;
+  }
+
+  .time {
+    font-size: 0.7rem;
+  }
+}

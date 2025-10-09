@@ -1,0 +1,235 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.about {
+  .hero {
+    position: relative;
+    height: 60vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+      url('../assets/about-page.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    color: $white;
+    margin-bottom: $spacing-xl;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+      height: 50vh;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+    }
+  }
+
+  .container {
+    @include container;
+  }
+
+  .title {
+    @include heading-1;
+    color: $white;
+    margin-bottom: $spacing-sm;
+    position: relative;
+    z-index: 2;
+    font-size: 3.5rem;
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+    }
+  }
+
+  .subtitle {
+    @include paragraph;
+    color: $white;
+    font-size: 1.3rem;
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    margin: 0 auto;
+
+    @media (max-width: 768px) {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.contentSection {
+  margin-bottom: $spacing-xl * 2;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: stretch; // Stretch items to match height
+  justify-content: space-between;
+  gap: $spacing-xl;
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.imageContainer {
+  flex: 1.2; // Make image container slightly larger
+
+  @media (max-width: 992px) {
+    width: 100%;
+    max-width: 600px; // Increase max width on mobile
+  }
+}
+
+.aboutImage {
+  width: 100%;
+  height: 100%; // Make image fill container height
+  object-fit: cover; // Maintain aspect ratio while filling container
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-lg;
+  transition: all $transition-medium;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: $box-shadow-xl;
+  }
+
+  @media (max-width: 992px) {
+    margin-bottom: $spacing-lg;
+    height: auto; // Auto height on mobile
+    object-fit: contain; // Contain image on mobile
+  }
+}
+
+.textContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; // Center content vertically
+
+  @media (max-width: 992px) {
+    width: 100%;
+  }
+}
+
+.sectionTitle {
+  @include heading-2;
+  color: $primary-color;
+  margin-bottom: $spacing-md;
+  position: relative;
+  padding-bottom: $spacing-sm;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: $accent-color;
+    border-radius: 3px;
+  }
+}
+
+.paragraph {
+  @include paragraph;
+  color: $text-light;
+  margin-bottom: $spacing-md;
+  line-height: 1.8;
+  font-size: 17px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.ctaSection {
+  margin-bottom: $spacing-xl * 2;
+  text-align: center;
+  padding: $spacing-xl * 2 $spacing-md;
+  background: linear-gradient(
+    135deg,
+    rgba($primary-color, 0.1) 0%,
+    rgba($secondary-color, 0.1) 100%
+  );
+  border-radius: $border-radius-xl;
+}
+
+.ctaContent {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  @include heading-2;
+  color: $primary-color;
+  margin-bottom: $spacing-md;
+  font-size: 2.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.ctaText {
+  @include paragraph;
+  color: $text-light;
+  font-size: 1.2rem;
+  margin-bottom: $spacing-xl;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+}
+
+.ctaButton {
+  @include button-base;
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  color: $white;
+  padding: $spacing-md $spacing-xl * 2;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all $transition-medium;
+  box-shadow: $box-shadow-md;
+
+  &:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: $box-shadow-xl;
+    background: linear-gradient(
+      135deg,
+      lighten($primary-color, 10%),
+      lighten($secondary-color, 10%)
+    );
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  @media (max-width: 768px) {
+    padding: $spacing-md $spacing-xl;
+    font-size: 1rem;
+  }
+}
