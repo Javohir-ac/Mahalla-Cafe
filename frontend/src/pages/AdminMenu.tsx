@@ -9,11 +9,6 @@ import styles from './AdminMenu.module.scss'
 // Extend the service MenuItem interface with additional properties
 interface MenuItem extends ServiceMenuItem {
   availability?: boolean
-<<<<<<< HEAD
-  image?: string
-  imageUrl?: string // Add imageUrl property
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 }
 
 const AdminMenu: React.FC = () => {
@@ -40,18 +35,10 @@ const AdminMenu: React.FC = () => {
 
         if (response.success && response.data) {
           const items = Array.isArray(response.data) ? response.data : [response.data]
-<<<<<<< HEAD
-          // Add availability property to each item and map imageUrl to image
-          const itemsWithAvailability = items.map(item => ({
-            ...item,
-            id: item._id || item.id || '',
-            image: item.imageUrl || item.image || '', // Map imageUrl to image
-=======
           // Add availability property to each item
           const itemsWithAvailability = items.map(item => ({
             ...item,
             id: item._id || item.id || '',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
             availability: true, // Default to available
           }))
           setMenuItems(itemsWithAvailability)
@@ -317,16 +304,8 @@ const AdminMenu: React.FC = () => {
             value={categoryFilter}
             onChange={e => setCategoryFilter(e.target.value)}
           >
-<<<<<<< HEAD
-            {categories.map((category, index) => (
-              <option
-                key={`category-${index}`}
-                value={category === 'Barchasi' ? 'all' : category}
-              >
-=======
             {categories.map(category => (
               <option key={category} value={category === 'Barchasi' ? 'all' : category}>
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                 {category}
               </option>
             ))}
@@ -364,11 +343,7 @@ const AdminMenu: React.FC = () => {
         >
           {visibleItems.map((item, index) => (
             <motion.div
-<<<<<<< HEAD
-              key={item.id || `item-${index}`}
-=======
               key={item.id}
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
               className={styles.menuCard}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -376,20 +351,7 @@ const AdminMenu: React.FC = () => {
               whileHover={{ y: -10 }}
             >
               <div className={styles.cardImage}>
-<<<<<<< HEAD
-                <img
-                  src={
-                    item.imageUrl?.startsWith('/uploads/') // Use imageUrl if available
-                      ? `${(
-                          process.env.REACT_APP_API_URL || 'http://localhost:5000'
-                        ).replace('/api', '')}${item.imageUrl}`
-                      : item.image || '/assets/placeholder.jpg' // Fallback to image
-                  }
-                  alt={item.name}
-                />
-=======
                 <img src={item.image || '/assets/placeholder.jpg'} alt={item.name} />
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
               </div>
               <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
@@ -471,11 +433,7 @@ const AdminMenu: React.FC = () => {
             <tbody>
               {visibleItems.map((item, index) => (
                 <motion.tr
-<<<<<<< HEAD
-                  key={item.id || `item-table-${index}`}
-=======
                   key={item.id}
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
@@ -483,17 +441,7 @@ const AdminMenu: React.FC = () => {
                   <td>
                     <div className={styles.tableImage}>
                       <img
-<<<<<<< HEAD
-                        src={
-                          item.imageUrl?.startsWith('/uploads/') // Use imageUrl if available
-                            ? `${(
-                                process.env.REACT_APP_API_URL || 'http://localhost:5000'
-                              ).replace('/api', '')}${item.imageUrl}`
-                            : item.image || '/assets/placeholder.jpg' // Fallback to image
-                        }
-=======
                         src={item.image || '/assets/placeholder.jpg'}
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                         alt={item.name}
                       />
                     </div>

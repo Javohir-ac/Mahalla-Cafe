@@ -6,24 +6,6 @@ const {
   updateAdmin,
   deleteAdmin,
 } = require('../controllers/admin.controller')
-<<<<<<< HEAD
-
-const router = express.Router()
-
-// GET /api/admins
-router.get('/', getAllAdmins)
-
-// GET /api/admins/:id
-router.get('/:id', getAdminById)
-
-// POST /api/admins
-router.post('/', createAdmin)
-
-// PUT /api/admins/:id
-router.put('/:id', updateAdmin)
-
-// DELETE /api/admins/:id
-=======
 const { authorizeAdmin } = require('../middleware/auth.middleware')
 
 const router = express.Router()
@@ -44,7 +26,6 @@ router.post('/', createAdmin)
 router.put('/:id', updateAdmin)
 
 // DELETE /api/admins/:id - Delete admin
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 router.delete('/:id', deleteAdmin)
 
 module.exports = router

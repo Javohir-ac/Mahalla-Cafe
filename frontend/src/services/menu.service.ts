@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-=======
-const API_BASE_URL = 'http://localhost:5000/api'
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -22,10 +18,7 @@ export interface MenuItem {
   price: number
   category: string
   image?: string
-<<<<<<< HEAD
   imageUrl?: string
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
   createdAt?: string
   updatedAt?: string
 }
@@ -37,22 +30,13 @@ export interface MenuResponse {
 }
 
 export const menuService = {
-<<<<<<< HEAD
   // Get all menu items - Publicly accessible
   getAll: async (): Promise<MenuResponse> => {
     try {
-=======
-  // Get all menu items
-  getAll: async (): Promise<MenuResponse> => {
-    try {
-      const token = getAuthToken()
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const response = await fetch(`${API_BASE_URL}/menu`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-<<<<<<< HEAD
         },
       })
 
@@ -63,45 +47,26 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Get menu items error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
 
-<<<<<<< HEAD
   // Get menu items for recipes - Publicly accessible
   getForRecipes: async (): Promise<MenuResponse> => {
     try {
-=======
-  // Get menu items for recipes
-  getForRecipes: async (): Promise<MenuResponse> => {
-    try {
-      const token = getAuthToken()
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const response = await fetch(`${API_BASE_URL}/menu`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-<<<<<<< HEAD
         },
       })
 
@@ -112,45 +77,26 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Get menu items for recipes error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
 
-<<<<<<< HEAD
   // Get menu item by ID - Publicly accessible
   getById: async (id: string): Promise<MenuResponse> => {
     try {
-=======
-  // Get menu item by ID
-  getById: async (id: string): Promise<MenuResponse> => {
-    try {
-      const token = getAuthToken()
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const response = await fetch(`${API_BASE_URL}/menu/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-<<<<<<< HEAD
         },
       })
 
@@ -161,25 +107,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
-          Authorization: `Bearer ${token}`,
-        },
-      })
-
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Get menu item error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
@@ -197,7 +133,6 @@ export const menuService = {
         body: formData,
       })
 
-<<<<<<< HEAD
       // Check if response is OK
       if (!response.ok) {
         const errorText = await response.text()
@@ -205,21 +140,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Create menu item with image error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
@@ -238,7 +167,6 @@ export const menuService = {
         body: JSON.stringify(menuItem),
       })
 
-<<<<<<< HEAD
       // Check if response is OK
       if (!response.ok) {
         const errorText = await response.text()
@@ -246,21 +174,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Create menu item error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
@@ -278,7 +200,6 @@ export const menuService = {
         body: formData,
       })
 
-<<<<<<< HEAD
       // Check if response is OK
       if (!response.ok) {
         const errorText = await response.text()
@@ -286,21 +207,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Update menu item with image error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
@@ -319,7 +234,6 @@ export const menuService = {
         body: JSON.stringify(menuItem),
       })
 
-<<<<<<< HEAD
       // Check if response is OK
       if (!response.ok) {
         const errorText = await response.text()
@@ -327,21 +241,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Update menu item error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },
@@ -359,7 +267,6 @@ export const menuService = {
         },
       })
 
-<<<<<<< HEAD
       // Check if response is OK
       if (!response.ok) {
         const errorText = await response.text()
@@ -367,21 +274,15 @@ export const menuService = {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       const result = await response.json()
       return result
     } catch (error) {
       console.error('Delete menu item error:', error)
       return {
         success: false,
-<<<<<<< HEAD
         message:
           'Tarmoq xatosi yuz berdi: ' +
           (error instanceof Error ? error.message : String(error)),
-=======
-        message: 'Tarmoq xatosi yuz berdi',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       }
     }
   },

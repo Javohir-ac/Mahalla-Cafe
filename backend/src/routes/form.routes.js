@@ -1,12 +1,4 @@
 const express = require('express')
-<<<<<<< HEAD
-const { handleContactForm } = require('../controllers/form.controller')
-
-const router = express.Router()
-
-// POST /api/contact
-router.post('/contact', handleContactForm)
-=======
 const {
   handleContactSubmission,
   handleOrderSubmission,
@@ -27,6 +19,5 @@ router.post('/reservation', handleReservationSubmission)
 
 // Send Telegram message route
 router.post('/send-telegram', sendTelegramMessageHandler)
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 
 module.exports = router

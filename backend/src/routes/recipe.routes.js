@@ -6,24 +6,6 @@ const {
   updateRecipe,
   deleteRecipe,
 } = require('../controllers/recipe.controller')
-<<<<<<< HEAD
-
-const router = express.Router()
-
-// GET /api/recipes
-router.get('/', getAllRecipes)
-
-// GET /api/recipes/:id
-router.get('/:id', getRecipeById)
-
-// POST /api/recipes
-router.post('/', createRecipe)
-
-// PUT /api/recipes/:id
-router.put('/:id', updateRecipe)
-
-// DELETE /api/recipes/:id
-=======
 const { authorizeAdmin } = require('../middleware/auth.middleware')
 const { uploadMenuImage, handleMulterError } = require('../middleware/upload.middleware')
 
@@ -45,7 +27,6 @@ router.post('/', uploadMenuImage, handleMulterError, createRecipe)
 router.put('/:id', uploadMenuImage, handleMulterError, updateRecipe)
 
 // DELETE /api/recipes/:id - Delete recipe
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 router.delete('/:id', deleteRecipe)
 
 module.exports = router

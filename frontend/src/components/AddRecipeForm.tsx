@@ -265,11 +265,7 @@ const AddRecipeForm: React.FC<AddRecipeFormProps> = ({ onClose, onSubmit, recipe
                       </option>
                     ))
                   ) : (
-<<<<<<< HEAD
-                    <option key='no-items'>Taomlar topilmadi</option>
-=======
                     <option>Taomlar topilmadi</option>
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                   )}
                 </select>
               )}

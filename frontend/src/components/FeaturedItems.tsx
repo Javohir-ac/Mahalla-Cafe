@@ -11,10 +11,6 @@ interface FeaturedItem {
   description: string
   price: number
   image: string
-<<<<<<< HEAD
-  imageUrl?: string
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 }
 
 const FeaturedItems: React.FC = () => {
@@ -68,11 +64,7 @@ const FeaturedItems: React.FC = () => {
         title: item.title,
         price: item.price || '0',
         quantity: 1,
-<<<<<<< HEAD
-        image: fullItem?.imageUrl || fullItem?.image || '',
-=======
         image: fullItem?.image || '',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       })
     }
 
@@ -164,17 +156,7 @@ const FeaturedItems: React.FC = () => {
             >
               <MenuCard
                 id={item.id}
-<<<<<<< HEAD
-                image={
-                  item.imageUrl?.startsWith('/uploads/')
-                    ? `${(
-                        process.env.REACT_APP_API_URL || 'http://localhost:5000'
-                      ).replace('/api', '')}${item.imageUrl}`
-                    : item.image
-                }
-=======
                 image={item.image}
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                 title={item.name}
                 description={item.description}
                 price={`$${item.price.toFixed(2)}`}

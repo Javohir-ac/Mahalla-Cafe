@@ -1,8 +1,5 @@
 const Recipe = require('../models/Recipe')
-<<<<<<< HEAD
-=======
 const ActivityLog = require('../models/ActivityLog')
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 const { sendSuccess, sendError } = require('../utils/response.utils')
 
 // Get all recipes
@@ -33,10 +30,6 @@ const getRecipeById = async (req, res) => {
 // Create new recipe
 const createRecipe = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const recipe = new Recipe(req.body)
-    await recipe.save()
-=======
     // Handle image upload
     let image = null
     if (req.file) {
@@ -64,7 +57,6 @@ const createRecipe = async (req, res) => {
       })
     }
 
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, recipe, 'Recipe created successfully', 201)
   } catch (error) {
     console.error('Error creating recipe:', error)
@@ -75,15 +67,6 @@ const createRecipe = async (req, res) => {
 // Update recipe
 const updateRecipe = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const recipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    })
-    if (!recipe) {
-      return sendError(res, 'Recipe not found', 404)
-    }
-=======
     // Handle image upload
     let updateData = { ...req.body }
 
@@ -113,7 +96,6 @@ const updateRecipe = async (req, res) => {
       })
     }
 
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, recipe, 'Recipe updated successfully')
   } catch (error) {
     console.error('Error updating recipe:', error)
@@ -125,11 +107,6 @@ const updateRecipe = async (req, res) => {
 const deleteRecipe = async (req, res) => {
   try {
     const recipe = await Recipe.findByIdAndDelete(req.params.id)
-<<<<<<< HEAD
-    if (!recipe) {
-      return sendError(res, 'Recipe not found', 404)
-    }
-=======
 
     if (!recipe) {
       return sendError(res, 'Recipe not found', 404)
@@ -147,7 +124,6 @@ const deleteRecipe = async (req, res) => {
       })
     }
 
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, null, 'Recipe deleted successfully')
   } catch (error) {
     console.error('Error deleting recipe:', error)

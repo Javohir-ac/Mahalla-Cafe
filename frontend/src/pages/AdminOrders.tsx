@@ -467,11 +467,7 @@ const AdminOrders: React.FC = () => {
                 <h3>Buyurtma elementlari</h3>
                 <ul>
                   {selectedOrder.items.map((item, index) => (
-<<<<<<< HEAD
-                    <li key={`order-item-${selectedOrder._id}-${index}`}>
-=======
                     <li key={index}>
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                       {item.title} - {item.quantity} dona - ${item.price.toFixed(2)}
                     </li>
                   ))}

@@ -14,10 +14,7 @@ interface MenuPageItem {
   price: number
   category: string
   image: string
-<<<<<<< HEAD
   imageUrl?: string // Add imageUrl property
-=======
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 }
 
 // Recipe details data
@@ -41,16 +38,12 @@ const Menu: React.FC = () => {
         setLoading(true)
         const response = await menuService.getAll()
         if (response.success && Array.isArray(response.data)) {
-<<<<<<< HEAD
           // Map imageUrl to image for compatibility
           const itemsWithImage = response.data.map(item => ({
             ...item,
             image: item.imageUrl || item.image || '', // Use imageUrl or fallback to image
           }))
           setMenuItems(itemsWithImage as MenuPageItem[])
-=======
-          setMenuItems(response.data as MenuPageItem[])
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
         } else {
           setError('Menyu elementlarini yuklab bo`lmadi')
         }
@@ -105,11 +98,7 @@ const Menu: React.FC = () => {
       cartItems.push({
         ...item,
         quantity: 1,
-<<<<<<< HEAD
         image: fullItem?.imageUrl || fullItem?.image || '', // Use imageUrl or fallback to image
-=======
-        image: fullItem?.image || '',
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       })
     }
 
@@ -239,7 +228,6 @@ const Menu: React.FC = () => {
               >
                 <MenuCard
                   id={item.id}
-<<<<<<< HEAD
                   image={
                     item.imageUrl?.startsWith('/uploads/') // Use imageUrl if available
                       ? `${(
@@ -247,9 +235,6 @@ const Menu: React.FC = () => {
                         ).replace('/api', '')}${item.imageUrl}`
                       : item.image || '' // Fallback to image
                   }
-=======
-                  image={item.image}
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
                   title={item.name}
                   description={item.description}
                   price={`$${item.price.toFixed(2)}`}

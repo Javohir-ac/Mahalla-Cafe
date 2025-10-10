@@ -1,8 +1,5 @@
 const Order = require('../models/Order')
-<<<<<<< HEAD
-=======
 const ActivityLog = require('../models/ActivityLog')
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 const { sendSuccess, sendError } = require('../utils/response.utils')
 
 // Get all orders
@@ -35,10 +32,7 @@ const createOrder = async (req, res) => {
   try {
     const order = new Order(req.body)
     await order.save()
-<<<<<<< HEAD
-=======
 
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, order, 'Order created successfully', 201)
   } catch (error) {
     console.error('Error creating order:', error)
@@ -46,19 +40,6 @@ const createOrder = async (req, res) => {
   }
 }
 
-<<<<<<< HEAD
-// Update order
-const updateOrder = async (req, res) => {
-  try {
-    const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    })
-    if (!order) {
-      return sendError(res, 'Order not found', 404)
-    }
-    sendSuccess(res, order, 'Order updated successfully')
-=======
 // Update order (status)
 const updateOrder = async (req, res) => {
   try {
@@ -87,7 +68,6 @@ const updateOrder = async (req, res) => {
     }
 
     sendSuccess(res, order, 'Order status updated successfully')
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
   } catch (error) {
     console.error('Error updating order:', error)
     sendError(res, 'Failed to update order')
@@ -98,17 +78,11 @@ const updateOrder = async (req, res) => {
 const deleteOrder = async (req, res) => {
   try {
     const order = await Order.findByIdAndDelete(req.params.id)
-<<<<<<< HEAD
-    if (!order) {
-      return sendError(res, 'Order not found', 404)
-    }
-=======
 
     if (!order) {
       return sendError(res, 'Order not found', 404)
     }
 
->>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, null, 'Order deleted successfully')
   } catch (error) {
     console.error('Error deleting order:', error)
