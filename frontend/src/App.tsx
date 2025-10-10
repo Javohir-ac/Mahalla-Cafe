@@ -33,11 +33,20 @@ const App: React.FC = () => {
               <Route path='/order' element={<Order />} />
               <Route path='/about' element={<About />} />
               <Route path='/reservation' element={<Reservation />} />
+<<<<<<< HEAD
               {/* Admin authentication routes with main layout */}
               <Route path='/admin/login' element={<AdminLogin />} />
               <Route path='/admin/register' element={<AdminRegister />} />
             </Route>
 
+=======
+            </Route>
+
+            {/* Admin authentication routes */}
+            <Route path='/admin/login' element={<AdminLogin />} />
+            <Route path='/admin/register' element={<AdminRegister />} />
+
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
             {/* Protected admin routes */}
             <Route element={<AdminLayout />}>
               <Route

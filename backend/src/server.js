@@ -40,13 +40,20 @@ const dashboardRoutes = require('./routes/dashboard.routes')
 const app = express()
 const PORT = process.env.PORT || 5000
 
+<<<<<<< HEAD
 // CORS configuration - Updated for local development and Render deployment
+=======
+// CORS configuration - Updated for Render deployment
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 const allowedOrigins = [
   'https://mahalla-cafe-buxorodagi-eng-zo-r-kafe.onrender.com',
   'http://localhost:3000',
   'http://localhost:5000',
+<<<<<<< HEAD
   'http://127.0.0.1:3000',
   'http://127.0.0.1:5000',
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 ]
 
 // Dynamic origin configuration for development and production
@@ -59,6 +66,7 @@ const corsOptions = {
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
+<<<<<<< HEAD
       // For development, allow all localhost origins
       if (
         process.env.NODE_ENV === 'development' &&
@@ -68,12 +76,16 @@ const corsOptions = {
       } else {
         callback(new Error('Not allowed by CORS'))
       }
+=======
+      callback(new Error('Not allowed by CORS'))
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     }
   },
   credentials: true,
   optionsSuccessStatus: 200,
 }
 
+<<<<<<< HEAD
 // Use CORS middleware with options
 app.use(cors(corsOptions))
 
@@ -83,6 +95,12 @@ app.options('*', cors(corsOptions))
 // Middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+=======
+app.use(cors(corsOptions))
+
+// Middleware
+app.use(express.json())
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
@@ -101,6 +119,7 @@ app.use('/api/menu', menuRoutes)
 app.use('/api/activity', activityRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 
+<<<<<<< HEAD
 // 404 handler for API routes - Moved before the React app route
 app.use('/api/*', (req, res) => {
   res.status(404).json({
@@ -109,11 +128,14 @@ app.use('/api/*', (req, res) => {
   })
 })
 
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 // Serve React app for all non-API routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'build', 'index.html'))
 })
 
+<<<<<<< HEAD
 // Global error handler - ensure all errors return JSON
 app.use((error, req, res, next) => {
   console.error('Unhandled error:', error)
@@ -129,6 +151,8 @@ app.use((error, req, res, next) => {
   })
 })
 
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 // Database connection
 // Remove console.log statements for production
 // console.log('🔄 MongoDB ga ulanish urunilmoqda...')
@@ -150,7 +174,11 @@ mongoose
       // console.log('📂 Server ishga tushdi:', new Date().toLocaleString())
     })
 
+<<<<<<< HEAD
     // Graceful shutdown
+=======
+    // Graceful <shutdown></shutdown>
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     process.on('SIGINT', () => {
       // Remove console.log statements for production
       // console.log("\n🛑 Server to'xtatilmoqda...")

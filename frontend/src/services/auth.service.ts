@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api'
 
 interface AuthResponse {
@@ -63,6 +64,8 @@ export const authService = {
   },
 }
 
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 // Function to verify if the user is an admin
 export const isAdmin = (): boolean => {
   try {
@@ -97,9 +100,12 @@ export const isAdmin = (): boolean => {
     return false
   }
 }
+<<<<<<< HEAD
 
 // Function to logout admin
 export const logoutAdmin = (): void => {
   localStorage.removeItem('admin')
   window.dispatchEvent(new Event('adminStatusChanged'))
 }
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b

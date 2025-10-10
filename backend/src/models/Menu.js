@@ -14,15 +14,23 @@ const menuSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+<<<<<<< HEAD
       min: 0,
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     },
     category: {
       type: String,
       required: true,
       trim: true,
     },
+<<<<<<< HEAD
     imageUrl: {
       type: String,
+=======
+    image: {
+      type: String, // URL to the image
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       required: false,
     },
     isAvailable: {

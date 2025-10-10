@@ -23,7 +23,10 @@
     "web-vitals": "^5.1.0"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "react-scripts start",
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

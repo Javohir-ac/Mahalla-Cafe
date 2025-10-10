@@ -31,6 +31,10 @@ const createReservation = async (req, res) => {
   try {
     const reservation = new Reservation(req.body)
     await reservation.save()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, reservation, 'Reservation created successfully', 201)
   } catch (error) {
     console.error('Error creating reservation:', error)
@@ -45,9 +49,17 @@ const updateReservation = async (req, res) => {
       new: true,
       runValidators: true,
     })
+<<<<<<< HEAD
     if (!reservation) {
       return sendError(res, 'Reservation not found', 404)
     }
+=======
+
+    if (!reservation) {
+      return sendError(res, 'Reservation not found', 404)
+    }
+
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, reservation, 'Reservation updated successfully')
   } catch (error) {
     console.error('Error updating reservation:', error)
@@ -59,9 +71,17 @@ const updateReservation = async (req, res) => {
 const deleteReservation = async (req, res) => {
   try {
     const reservation = await Reservation.findByIdAndDelete(req.params.id)
+<<<<<<< HEAD
     if (!reservation) {
       return sendError(res, 'Reservation not found', 404)
     }
+=======
+
+    if (!reservation) {
+      return sendError(res, 'Reservation not found', 404)
+    }
+
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
     sendSuccess(res, null, 'Reservation deleted successfully')
   } catch (error) {
     console.error('Error deleting reservation:', error)

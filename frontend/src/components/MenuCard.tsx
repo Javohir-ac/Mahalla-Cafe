@@ -28,6 +28,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
   const [isAdding, setIsAdding] = useState(false)
   const [buttonText, setButtonText] = useState("Savatchaga qo'shish")
 
+<<<<<<< HEAD
   // Construct full image URL if it's a relative path
   const fullImageUrl = image?.startsWith('/uploads/')
     ? `${(process.env.REACT_APP_API_URL || 'http://localhost:5000').replace(
@@ -36,6 +37,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
       )}${image}`
     : image
 
+=======
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
   const handleAddToCart = () => {
     if (isAdding || !onAddToCart) return
 
@@ -62,7 +65,11 @@ const MenuCard: React.FC<MenuCardProps> = ({
       transition={{ duration: 0.3 }}
     >
       <div className={styles.imageContainer}>
+<<<<<<< HEAD
         <ImageLoader src={fullImageUrl} alt={title} className={styles.image} />
+=======
+        <ImageLoader src={image} alt={title} className={styles.image} />
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
       </div>
 
       <div className={styles.content}>

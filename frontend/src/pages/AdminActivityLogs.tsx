@@ -296,7 +296,11 @@ const AdminActivityLogs: React.FC = () => {
 
           {[...Array(totalPages)].map((_, index) => (
             <motion.button
+<<<<<<< HEAD
               key={`page-${index + 1}`}
+=======
+              key={index + 1}
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
               className={`${styles.paginationButton} ${
                 currentPage === index + 1 ? styles.active : ''
               }`}

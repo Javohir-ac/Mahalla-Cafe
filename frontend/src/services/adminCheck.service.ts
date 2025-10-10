@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api'
+=======
+const API_BASE_URL = 'http://localhost:5000/api'
+>>>>>>> 4644f719855ad091e7d31f14a3af7713558a7c4b
 
 interface AdminCheckResponse {
   success: boolean
