@@ -1,7 +1,41 @@
+import { motion } from 'framer-motion'
+import { Eye, ShoppingCart } from 'lucide-react'
+import React, { useState } from 'react'
+import ImageLoader from './ImageLoader'
+import styles from './MenuCard.module.scss'
+
+interface MenuCardProps {
+  id: string
+  image: string
+  title: string
+  description: string
+  price?: string
+  onAddToCart?: (item: { id: string; title: string; price?: string }) => void
+  onViewRecipe?: (item: { id: string; title: string; price?: string }) => void
+  showAddToCart?: boolean
+}
+
+const MenuCard: React.FC<MenuCardProps> = ({
+  id,
+  image,
+  title,
+  description,
+  price,
+  onAddToCart,
+  onViewRecipe,
   showAddToCart = true,
 }) => {
   const [isAdding, setIsAdding] = useState(false)
   const [buttonText, setButtonText] = useState("Savatchaga qo'shish")
+
+  // Construct full image URL if it's a relative path
+  const fullImageUrl = image?.startsWith('/uploads/')
+    ? `${(process.env.REACT_APP_API_URL || 'http://localhost:5000').replace(
+        '/api',
+        ''
+      )}${image}`
+    : image
+
 
   const handleAddToCart = () => {
     if (isAdding || !onAddToCart) return
@@ -29,6 +63,7 @@
       transition={{ duration: 0.3 }}
     >
       <div className={styles.imageContainer}>
+        <ImageLoader src={fullImageUrl} alt={title} className={styles.image} />
         <ImageLoader src={image} alt={title} className={styles.image} />
       </div>
 
