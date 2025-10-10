@@ -1,88 +1,62 @@
 const { spawn } = require('child_process')
 const path = require('path')
 
-// Backend va frontend jarayonlarini saqlash uchun o'zgaruvchilar
-let backendProcess
-let frontendProcess
+// Function to spawn a process with proper shell support
+function spawnProcess(command, args, options, name) {
+  const proc = spawn(command, args, { ...options, shell: true }) // shell:true qo'shildi
 
-// Backend ni ishga tushirish
-function startBackend() {
-  console.log('🔄 Backend ishga tushirilmoqda...')
+  proc.stdout.on('data', data => {
+    console.log(`[${name}] ${data.toString()}`)
+  })
 
-  backendProcess = spawn('node', ['src/server.js'], {
-    cwd: path.join(__dirname, 'backend'),
-    stdio: 'inherit',
-    shell: true,
-    env: {
-      ...process.env,
-      NODE_ENV: 'development',
+  proc.stderr.on('data', data => {
+    console.error(`[${name} ERROR] ${data.toString()}`)
+  })
+
+  proc.on('error', error => {
+    console.error(`[${name} SPAWN ERROR] ${error.message}`)
+  })
+
+  proc.on('close', code => {
+    console.log(`[${name}] Process exited with code ${code}`)
+  })
+
+  return proc
+}
+
+console.log('Starting Mahalla Cafe application...')
+
+// Start backend server
+console.log('Starting backend server...')
+const backend = spawnProcess(
+  'node',
+  [path.join(__dirname, 'backend', 'src', 'server.js')],
+  { cwd: path.join(__dirname, 'backend'), env: process.env },
+  'BACKEND'
+)
+
+// Wait a bit for backend to start, then start frontend
+let frontend
+setTimeout(() => {
+  console.log('Starting frontend server...')
+  frontend = spawnProcess(
+    'npx',
+    ['serve', '-s', 'build'], // 'serve -s build' frontendni ishga tushuradi
+    {
+      cwd: path.join(__dirname, 'frontend'),
+      env: { ...process.env, PORT: '3000' },
     },
-  })
+    'FRONTEND'
+  )
+}, 3000)
 
-  backendProcess.on('spawn', () => {
-    console.log('✅ Backend muvaffaqiyatli ishga tushdi (port 5000)')
-    // Backend ishga tushgandan keyin frontend ni ishga tushirish
-    setTimeout(startFrontend, 3000) // 3 soniya kutish
-  })
-
-  backendProcess.on('error', error => {
-    console.error('❌ Backend da xatolik yuz berdi:', error.message)
-  })
-
-  backendProcess.on('close', code => {
-    console.log(`🛑 Backend jarayoni tugadi, kod: ${code}`)
-    // Agar backend to'xtasa, frontend ni ham to'xtatamiz
-    if (frontendProcess && !frontendProcess.killed) {
-      frontendProcess.kill()
-    }
-  })
-}
-
-// Frontend ni ishga tushirish
-function startFrontend() {
-  console.log('🔄 Frontend ishga tushirilmoqda...')
-
-  frontendProcess = spawn('npm', ['run', 'dev'], {
-    cwd: path.join(__dirname, 'frontend'),
-    stdio: 'inherit',
-    shell: true,
-  })
-
-  frontendProcess.on('spawn', () => {
-    console.log('✅ Frontend muvaffaqiyatli ishga tushdi (port 3000)')
-  })
-
-  frontendProcess.on('error', error => {
-    console.error('❌ Frontend da xatolik yuz berdi:', error.message)
-  })
-
-  frontendProcess.on('close', code => {
-    console.log(`🛑 Frontend jarayoni tugadi, kod: ${code}`)
-    // Agar frontend to'xtasa, backend ni ham to'xtatamiz
-    if (backendProcess && !backendProcess.killed) {
-      backendProcess.kill()
-    }
-  })
-}
-
-// Ikkala jarayonni to'xtatish
-function shutdown() {
-  console.log("\n🔄 Ikkala jarayon to'xtatilmoqda...")
-
-  if (backendProcess && !backendProcess.killed) {
-    backendProcess.kill()
-  }
-
-  if (frontendProcess && !frontendProcess.killed) {
-    frontendProcess.kill()
-  }
-
+// Handle process termination
+const shutdown = () => {
+  console.log('Shutting down servers...')
+  backend.kill()
+  if (frontend) frontend.kill()
   process.exit(0)
 }
 
-// SIGINT (Ctrl+C) va SIGTERM signallarini tinglash
 process.on('SIGINT', shutdown)
 process.on('SIGTERM', shutdown)
-
-// Backend ni ishga tushirish
-startBackend()

@@ -9,7 +9,7 @@
   "scripts": {
     "install-all": "npm install && cd frontend && npm install --legacy-peer-deps && cd ../backend && npm install",
     "build": "npm run build-frontend",
-    "start": "run-p start-backend start-frontend",
+    "start": "node start.js",
     "build-frontend": "cd frontend && npm run build",
     "start-backend": "cd backend && npm start",
     "start-frontend": "cd frontend && serve -s build",
