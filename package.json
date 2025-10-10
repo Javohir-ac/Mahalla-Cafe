@@ -16,12 +16,12 @@
     "@fontsource/poppins": "^5.2.7",
     "react-international-phone": "^4.6.0",
     "react-scroll": "^1.9.3",
-    "web-vitals": "^5.1.0",
-    "concurrently": "^9.2.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.1"
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "concurrently": "^9.2.1"
   }
 }
