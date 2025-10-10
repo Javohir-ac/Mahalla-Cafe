@@ -1,0 +1,404 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  color: $white;
+  margin: 0;
+  padding: 0;
+  // Ensure no extra margin that could create gaps
+  margin-top: 0;
+  // Ensure no bottom margin that could create gaps
+  margin-bottom: 0;
+  // Ensure no top margin that could create gap with navbar
+  margin-top: 0 !important;
+
+  @include respond-to(md) {
+    height: 100vh;
+    min-height: 600px;
+  }
+
+  @include respond-to(xs) {
+    height: 100vh;
+    min-height: 500px;
+  }
+
+  // Ensure no margin on responsive views
+  @media (max-width: 768px) {
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    margin: 0;
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    min-height: 400px;
+  }
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0;
+
+  // Ensure panoramic image covers the full hero section
+  object-fit: cover;
+  object-position: center;
+
+  // For ultra-wide perspective effect
+  @media (min-width: 1920px) {
+    background-size: cover;
+  }
+
+  // Mobile optimization
+  @include respond-to(xs) {
+    background-position: center;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4); // Semi-transparent overlay for better text readability
+  z-index: 1;
+}
+
+.container {
+  @include container;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; // Center content horizontally
+
+  // Position content slightly lower than vertical center (20-30% lower)
+  @media (min-width: 768px) {
+    align-items: center;
+    padding-top: 80px; // Offset for navbar height on desktop
+  }
+
+  @include respond-to(xs) {
+    align-items: center;
+    padding-top: 70px; // Offset for navbar height on mobile
+  }
+
+  // Remove extra padding on mobile to eliminate gap between navbar and sections
+  @media (max-width: 768px) {
+    padding-top: 70px;
+    padding: 0;
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 65px;
+    padding: 0;
+  }
+}
+
+.content {
+  max-width: 650px;
+  text-align: center;
+  width: 100%;
+
+  @include respond-to(md) {
+    max-width: 600px;
+  }
+
+  @include respond-to(xs) {
+    max-width: 100%;
+    padding: 0 $spacing-sm;
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    padding: 0 clamp(8px, 2vw, 12px);
+  }
+}
+
+.title {
+  font-family: $font-secondary; // Elegant serif font
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: clamp(1rem, 3vw, $spacing-md);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  color: $white; // White color for high contrast
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  .titleLogo {
+    height: clamp(2.5rem, 6vw, 4rem);
+    width: auto;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    animation: logoGlow 3s ease-in-out infinite alternate;
+  }
+
+  @keyframes logoGlow {
+    0% {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+    }
+    100% {
+      filter: drop-shadow(0 0 15px rgba(210, 105, 30, 0.8));
+    }
+  }
+}
+
+.subtitle {
+  @include paragraph;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: clamp(1.5rem, 4vw, $spacing-xl);
+  max-width: 600px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  color: rgba(255, 255, 255, 0.95);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons {
+  @include flex-row;
+  gap: clamp(12px, 2vw, 15px); // Reduced gap between buttons for better visual balance
+  justify-content: center;
+  flex-wrap: nowrap;
+
+  @include respond-to(xs) {
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  a {
+    text-decoration: none;
+    width: 100%;
+    max-width: clamp(180px, 28vw, 220px); // Increased max-width for larger buttons
+    margin: 0 auto;
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    a {
+      max-width: 100%;
+    }
+  }
+}
+
+.primaryButton,
+.secondaryButton {
+  @include button-base;
+  padding: 0 clamp(2rem, 5vw, 2.5rem); // Increased padding for larger buttons
+  font-size: clamp(1rem, 2.2vw, 1.2rem); // Larger font size for better readability
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border-radius: $border-radius-xl;
+  min-width: clamp(180px, 25vw, 220px); // Increased min-width
+  height: clamp(60px, 10vw, 70px); // Increased height for better proportion
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); // Subtle base shadow
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3)
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+    z-index: -1;
+  }
+
+  &:hover::before {
+    transform: translateX(100%);
+  }
+
+  // Mobile
+  @media (max-width: 480px) {
+    min-width: unset;
+    padding: 0 clamp(1.5rem, 4vw, 2rem);
+    height: clamp(55px, 9vw, 65px);
+  }
+}
+
+.primaryButton {
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  color: $white;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(
+      135deg,
+      lighten($primary-color, 8%),
+      lighten($secondary-color, 8%)
+    );
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+.secondaryButton {
+  background: transparent;
+  color: $white;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    border-color: $accent-color;
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+// Animation classes
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(30px);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+}
+
+// Parallax effect for background
+.parallax {
+  transform: translateZ(0);
+  will-change: transform;
+  transition: transform 0.1s ease-out;
+}
+
+// Pulsing animation for background
+.pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .title {
+    font-size: clamp(1.9rem, 5.5vw, 4rem);
+  }
+
+  .subtitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.4rem);
+  }
+}
+
+@media (max-width: 992px) {
+  .title {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+  }
+
+  .subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  }
+
+  .content {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+  }
+
+  .subtitle {
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-width: clamp(160px, 22vw, 200px);
+    height: clamp(55px, 9vw, 65px);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+  }
+
+  .content {
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+
+  .subtitle {
+    font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+    margin-bottom: clamp(1rem, 3vw, $spacing-lg);
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    min-width: unset;
+    height: clamp(50px, 8vw, 60px);
+    font-size: clamp(0.9rem, 2.2vw, 1rem);
+    padding: 0 clamp(1.2rem, 3.5vw, 1.8rem);
+  }
+
+  .buttons {
+    gap: clamp(10px, 2vw, $spacing-sm);
+  }
+
+  .hero {
+    min-height: 350px;
+  }
+}

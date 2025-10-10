@@ -1,0 +1,310 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  backdrop-filter: blur(2px);
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 256px; // w-64 equivalent (exactly 256px)
+  background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+  color: white;
+  z-index: 1000;
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  white-space: nowrap;
+
+  // Desktop - always visible and fixed
+  @media (min-width: 1280px) {
+    transform: translateX(0) !important;
+  }
+
+  // Tablet and mobile - hidden by default, shown when open
+  @media (max-width: 1279px) {
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.logoText {
+  transition: opacity 0.3s ease;
+}
+
+.toggleButton {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 0;
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.9rem 1.25rem;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.85);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: visible;
+  border-radius: 10px;
+  margin: 0 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  white-space: nowrap;
+
+  // Add animation for wow effect
+  opacity: 0;
+  animation: fadeInSlide 0.4s forwards;
+
+  // Enhanced hover effect with gradient background and shadow
+  &:hover {
+    color: white;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.1)
+    );
+    transform: translateX(8px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+
+    .icon {
+      transform: scale(1.3) rotate(10deg);
+    }
+  }
+
+  // Enhanced active state with stronger visual indicators
+  &.active {
+    color: white;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.15)
+    );
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform: translateX(5px);
+
+    // Enhanced active indicator with gradient
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 5px;
+      background: linear-gradient(to bottom, #ffd700, #ffa500);
+      border-radius: 0 4px 4px 0;
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    }
+
+    // Enhanced icon animation for active state
+    .icon {
+      animation: pulse 1.2s infinite;
+      transform: scale(1.2);
+    }
+  }
+
+  // Tooltip for collapsed state
+  &[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #333, #222);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+  }
+
+  &[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    left: 80px;
+  }
+}
+
+.icon {
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+  width: 24px;
+  height: 24px;
+}
+
+.title {
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+  letter-spacing: 0.5px;
+}
+
+// Enhanced animations
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.25);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+// Add fadeInSlide animation
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Wow effect for sidebar entrance
+@keyframes wowEffect {
+  0% {
+    transform: translateX(-100%) translateY(-10px);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(10px) translateY(5px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}
+
+.sidebar {
+  animation: wowEffect 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+// Responsive styles
+@media (max-width: 1279px) {
+  .sidebar {
+    width: 230px;
+  }
+
+  .sidebarHeader {
+    padding: 1.2rem 0.8rem;
+  }
+
+  .nav {
+    padding: 1.2rem 0;
+  }
+
+  .navLink {
+    padding: 0.8rem 1rem;
+    margin: 0 0.6rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  // Ensure tooltips are visible on mobile
+  .navLink[data-tooltip]:hover::after {
+    left: 65px;
+  }
+
+  .logo {
+    gap: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .toggleButton {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 180px;
+  }
+}

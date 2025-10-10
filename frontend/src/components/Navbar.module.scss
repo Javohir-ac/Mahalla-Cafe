@@ -1,0 +1,512 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+// Main navbar container with wow effect entrance
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; // Full viewport width
+  max-width: 100vw; // Prevent overflow
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(0.7rem, 2vw, 1rem) clamp(1rem, 4vw, 2rem);
+  background: rgba(20, 20, 20, 0.8); // Semi-transparent background
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  // Ensure navbar stays fixed on all screen sizes
+  will-change: transform;
+
+  // Scroll effect - navbar becomes more opaque and changes background
+  &.scrolled {
+    padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 4vw, 2rem);
+    background: rgba(15, 15, 15, 0.95); // More opaque background when scrolled
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+    .logo a {
+      font-size: clamp(1.4rem, 3vw, 1.6rem);
+    }
+  }
+
+  // Ensure navbar stays fixed on all screen sizes
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+  }
+
+  @media (max-width: 480px) {
+    position: fixed;
+    top: 0;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 clamp(1rem, 2vw, 2rem);
+}
+
+// Logo container
+.logo {
+  // Remove display: none to show the logo
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: fit-content;
+
+  .logoLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .letterLogo {
+    height: 30px;
+    width: 30px;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 4px rgba(210, 105, 30, 0.7));
+    }
+  }
+
+  .logoText {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      text-shadow: 0 0 10px rgba(229, 46, 113, 0.7);
+      transform: scale(1.02);
+    }
+  }
+
+  a {
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+
+    &:hover {
+      text-shadow: 0 0 10px rgba(229, 46, 113, 0.7);
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Navigation links container
+.navLinks {
+  display: flex;
+  list-style: none;
+  gap: clamp(2.5rem, 4vw, 4rem); // Increase spacing between links
+  margin: 0 0 0 clamp(10rem, 70vw, 40rem); // Add even more left margin to shift links further right
+  padding: 0;
+  flex: 0 0 auto;
+  justify-content: flex-end; // Align links to the right
+
+  @media (max-width: 992px) {
+    display: none;
+  }
+}
+
+// Individual navigation links with wow effects
+.navLink {
+  position: relative;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.7rem 0;
+  transition: all 0.3s ease;
+  // Ensure consistent display and alignment
+  display: inline-block;
+  vertical-align: top;
+
+  // Gradient underline effect
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  // Hover effects with glow
+  &:hover {
+    color: #fff;
+    text-shadow: 0 0 8px currentColor;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  // Active link with animated underline
+  &.active {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::after {
+      width: 100%;
+      background: linear-gradient(90deg, #e52e71, #ff8a00);
+      animation: pulseUnderline 2s infinite;
+    }
+  }
+}
+
+// Style scroll links to match regular nav links
+button.navLink {
+  background: none;
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  font-weight: 600;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.7rem 0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block; // Ensure consistent display
+  vertical-align: top; // Ensure consistent vertical alignment
+
+  // Gradient underline effect
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    transition: width 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+
+  // Hover effects with glow
+  &:hover {
+    color: #fff;
+    text-shadow: 0 0 8px currentColor;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  // Active state (when on the home page and section is active)
+  &.active {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::after {
+      width: 100%;
+      background: linear-gradient(90deg, #e52e71, #ff8a00);
+      animation: pulseUnderline 2s infinite;
+    }
+  }
+}
+
+// Pulse animation for active link underline
+@keyframes pulseUnderline {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 4vw, 4rem); // Increase spacing to prevent compression
+  flex: 0 0 auto;
+  min-width: fit-content;
+  margin-left: clamp(3rem, 5vw, 5rem); // More space between nav links and actions
+}
+
+// Cart icon with glow effect
+.cartIcon {
+  position: relative;
+
+  a {
+    color: #fff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // Ensure consistent hover effects
+    will-change: transform;
+
+    &:hover {
+      color: #fff;
+      text-shadow: 0 0 8px currentColor;
+      background: linear-gradient(90deg, #ff8a00, #e52e71);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Cart badge with pulse animation
+.badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #ff8a00, #e52e71);
+  color: #fff;
+  font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(229, 46, 113, 0.5);
+  animation: pulse 2s infinite;
+
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(229, 46, 113, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 10px rgba(229, 46, 113, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(229, 46, 113, 0);
+    }
+  }
+}
+
+// Mobile menu button with hover effects
+.mobileMenuButton {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+  width: clamp(36px, 8vw, 40px);
+  height: clamp(36px, 8vw, 40px);
+  border-radius: 50%;
+  // Ensure consistent hover effects
+  will-change: transform;
+
+  &:hover {
+    color: #fff;
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: rotate(15deg);
+  }
+
+  @media (max-width: 992px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Mobile navigation with slide and fade animation
+.mobileNavLinks {
+  display: none;
+  flex-direction: column;
+  list-style: none;
+  background: rgba(20, 20, 20, 0.95);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  animation: slideFadeIn 0.4s ease-out;
+  z-index: 1002; // Increased z-index to ensure it's above other elements
+
+  // Slide and fade entrance animation
+  @keyframes slideFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 992px) {
+    display: flex;
+  }
+
+  li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+// Mobile links with gradient shift effect
+.navLinkMobile {
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.8rem 1rem;
+  margin: 0 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: clamp(0.9rem, 2vw, 1rem);
+  // Ensure consistent display
+  display: block;
+  width: 100%;
+  text-align: center;
+
+  // Gradient shift effect on hover
+  &:hover {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transform: translateX(10px);
+  }
+
+  &.active {
+    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      right: 1rem;
+      height: 2px;
+      background: linear-gradient(90deg, #e52e71, #ff8a00);
+    }
+  }
+}
+
+// Navbar entrance animation
+.navbar {
+  opacity: 0;
+  transform: translateY(-100%);
+  animation: fadeInDown 0.6s ease-out 0.2s forwards;
+
+  @keyframes fadeInDown {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+// Enhanced responsive adjustments
+@media (max-width: 992px) {
+  .navbar {
+    padding: clamp(0.6rem, 1.8vw, 0.9rem) clamp(0.8rem, 3vw, 1.5rem);
+  }
+
+  .container {
+    padding: 0 clamp(8px, 1.5vw, 15px);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(0.7rem, 2.5vw, 1.2rem);
+  }
+
+  .logo a {
+    font-size: clamp(1.4rem, 3vw, 1.6rem);
+  }
+
+  .actions {
+    gap: clamp(0.8rem, 1.5vw, 1rem);
+  }
+
+  .mobileMenuButton {
+    width: clamp(32px, 7vw, 36px);
+    height: clamp(32px, 7vw, 36px);
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: clamp(0.4rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 0.8rem);
+  }
+
+  .logo a {
+    font-size: clamp(1.2rem, 2.5vw, 1.4rem);
+  }
+
+  .actions {
+    gap: clamp(0.5rem, 1vw, 0.7rem);
+  }
+
+  .mobileMenuButton {
+    width: clamp(28px, 6vw, 32px);
+    height: clamp(28px, 6vw, 32px);
+  }
+
+  .mobileNavLinks {
+    padding: 0.5rem 0;
+  }
+
+  .navLinkMobile {
+    padding: 0.6rem 0.8rem;
+    font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  }
+}
