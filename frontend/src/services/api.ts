@@ -4,9 +4,7 @@
 import axios from 'axios'
 
 // Create axios instance with default config
-const BASE_URL =
-  process.env.REACT_APP_API_URL ||
-  'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com/api'
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
@@ -14,6 +12,7 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Add this for CORS credentials
 })
 
 // Request interceptor

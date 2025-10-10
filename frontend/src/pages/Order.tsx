@@ -171,9 +171,7 @@ const Order: React.FC = () => {
 📝 Maxsus so‘rov: ${orderData.note || "Yo'q"}${cartDetails}
       `
 
-      const BASE_URL =
-        process.env.REACT_APP_API_URL ||
-        'https://mahalla-cafe-buxorodagi-eng-yaxshi-kafe.onrender.com/api'
+      const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
       const response = await fetch(`${BASE_URL}/send-telegram`, {
         method: 'POST',
