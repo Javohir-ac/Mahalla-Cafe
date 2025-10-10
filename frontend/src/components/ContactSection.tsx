@@ -36,20 +36,12 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const message = `
-✉️ Yangi aloqa xabari:
-👤 Ism: ${formData.name}
-📞 Telefon: ${formData.phone}
-📧 Email: ${formData.email}
-💬 Xabar: ${formData.message}
-      `
-
       const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
-      const response = await fetch(`${BASE_URL}/send-telegram`, {
+      const response = await fetch(`${BASE_URL}/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify(formData),
       })
 
       if (response.ok) {

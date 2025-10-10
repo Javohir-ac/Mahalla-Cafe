@@ -18,21 +18,22 @@ interface CartItem {
 }
 
 interface OrderFormData {
-  fullName: string
+  name: string
   phone: string
   address: string
-  orderTime: string
+  product: string
   note: string
+  cartItems: any[]
 }
 
 const Order: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [orderData, setOrderData] = useState<OrderFormData>({
-    fullName: '',
+  const [orderData, setOrderData] = useState<Omit<OrderFormData, 'cartItems'>>({
+    name: '',
     phone: '',
     address: '',
-    orderTime: '',
+    product: '',
     note: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -112,12 +113,7 @@ const Order: React.FC = () => {
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
     // Validate form
-    if (
-      !orderData.fullName ||
-      !orderData.phone ||
-      !orderData.address ||
-      !orderData.orderTime
-    ) {
+    if (!orderData.name || !orderData.phone || !orderData.address) {
       addAlert({
         type: 'error',
         title: "To'ldirishda xatolik!",
@@ -130,53 +126,22 @@ const Order: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      // Format order time for display
-      const orderTimeFormatted = new Date(orderData.orderTime).toLocaleString('uz-UZ', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      })
-
-      // Format message for Telegram
-      // Convert cart items to the format expected by the formatter
+      // Format cart items for the API
       const formattedCartItems = cartItems.map(item => ({
         title: item.title,
         quantity: item.quantity,
         price: parseFloat(item.price?.replace('$', '') || '0'),
       }))
 
-      // Determine if it's for now or later
-      const isNow = new Date(orderData.orderTime) <= new Date()
-      const orderTimeDisplay = isNow ? 'Hozir' : 'Keyinroq'
-
-      // Create cart details
-      let cartDetails = ''
-      if (formattedCartItems && formattedCartItems.length > 0) {
-        cartDetails = '\n\n🛍️ Buyurtmalar:'
-        formattedCartItems.forEach((item, index) => {
-          cartDetails += `\n  ${index + 1}. ${item.title} - ${
-            item.quantity
-          } dona - $${item.price.toFixed(2)}`
-        })
-      }
-
-      const message = `
-📦 Yangi buyurtma!
-👤 Ism: ${orderData.fullName}
-📞 Telefon: ${orderData.phone}
-📍 Manzil: ${orderData.address}
-🕒 Buyurtma vaqti: ${orderTimeDisplay} (${orderTimeFormatted})
-📝 Maxsus so‘rov: ${orderData.note || "Yo'q"}${cartDetails}
-      `
-
       const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
-      const response = await fetch(`${BASE_URL}/send-telegram`, {
+      const response = await fetch(`${BASE_URL}/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({
+          ...orderData,
+          cartItems: formattedCartItems,
+        }),
       })
 
       if (response.ok) {
@@ -185,11 +150,11 @@ const Order: React.FC = () => {
           addAlert({
             type: 'success',
             title: 'Muvaffaqiyat!',
-            message: '✅ Buyurtma muvaffaqiyatli yuborildi!',
+            message: '✅ Buyurtmangiz muvaffaqiyatli yuborildi!',
             duration: 5000,
           })
 
-          // Clear cart after confirmation
+          // Clear cart
           setCartItems([])
           localStorage.removeItem('mahallaCart')
 
@@ -199,10 +164,10 @@ const Order: React.FC = () => {
 
           // Reset form
           setOrderData({
-            fullName: '',
+            name: '',
             phone: '',
             address: '',
-            orderTime: '',
+            product: '',
             note: '',
           })
         } else {
@@ -341,14 +306,14 @@ const Order: React.FC = () => {
               <h2>Buyurtma berish</h2>
               <form onSubmit={handleCheckout} className={styles.form}>
                 <div className={styles.formGroup}>
-                  <label htmlFor='fullName' className={styles.label}>
+                  <label htmlFor='name' className={styles.label}>
                     Ism *
                   </label>
                   <input
                     type='text'
-                    id='fullName'
-                    name='fullName'
-                    value={orderData.fullName}
+                    id='name'
+                    name='name'
+                    value={orderData.name}
                     onChange={handleInputChange}
                     className={styles.input}
                     required
@@ -380,21 +345,6 @@ const Order: React.FC = () => {
                     id='address'
                     name='address'
                     value={orderData.address}
-                    onChange={handleInputChange}
-                    className={styles.input}
-                    required
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor='orderTime' className={styles.label}>
-                    Buyurtma vaqti *
-                  </label>
-                  <input
-                    type='datetime-local'
-                    id='orderTime'
-                    name='orderTime'
-                    value={orderData.orderTime}
                     onChange={handleInputChange}
                     className={styles.input}
                     required

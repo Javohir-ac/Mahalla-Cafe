@@ -33,23 +33,12 @@ const Reservation: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const message = `
-🪑 Yangi rezervatsiya!
-👤 Ism: ${formData.fullName}
-📞 Telefon: ${formData.phone}
-📅 Sana: ${formData.date}
-🕒 Vaqt: ${formData.time}
-👥 Odamlar soni: ${formData.guests}
-🪑 Joy turi: ${formData.tableType}
-📝 Izoh: ${formData.comment || "Yo'q"}
-      `
-
       const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
-      const response = await fetch(`${BASE_URL}/send-telegram`, {
+      const response = await fetch(`${BASE_URL}/reservation`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify(formData),
       })
 
       if (response.ok) {
