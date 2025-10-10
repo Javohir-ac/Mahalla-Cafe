@@ -1,0 +1,144 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 20px;
+}
+
+.dialog {
+  background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 450px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  // Glassmorphism effect
+  background: rgba(30, 30, 30, 0.9);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+  padding: 25px 30px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+  }
+}
+
+.body {
+  padding: 20px 30px;
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
+
+.footer {
+  padding: 20px 30px 30px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 25px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  min-width: 120px;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+  }
+}
+
+.cancelButton {
+  background: linear-gradient(135deg, #6c757d, #495057);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #5a6268, #343a40);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.confirmButton {
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  color: white;
+
+  &:hover {
+    background: linear-gradient(135deg, #d42265, #e67c00);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(229, 46, 113, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Responsive adjustments
+@include respond-to(sm) {
+  .dialog {
+    max-width: 90vw;
+  }
+
+  .header {
+    padding: 20px 20px 10px;
+  }
+
+  .body {
+    padding: 15px 20px;
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .footer {
+    padding: 15px 20px 20px;
+    flex-direction: column;
+  }
+
+  .button {
+    width: 100%;
+    min-width: auto;
+  }
+}

@@ -1,0 +1,144 @@
+// Responsive mixins for consistent behavior across components
+
+// Modal responsive sizing
+@mixin responsive-modal {
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: 500px;
+  }
+
+  @media (max-width: 480px) {
+    width: 98%;
+    max-width: 100%;
+    max-height: 95vh;
+  }
+}
+
+// Form responsive sizing
+@mixin responsive-form {
+  width: 100%;
+  max-width: 500px;
+  padding: $spacing-lg;
+
+  @media (max-width: 768px) {
+    padding: $spacing-md;
+    max-width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-sm;
+  }
+}
+
+// Card responsive sizing
+@mixin responsive-card {
+  padding: $spacing-md;
+
+  @media (max-width: 768px) {
+    padding: $spacing-sm;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-xs;
+  }
+}
+
+// Alert responsive sizing
+@mixin responsive-alert {
+  padding: $spacing-md $spacing-lg;
+  margin: $spacing-sm 0;
+
+  @media (max-width: 768px) {
+    padding: $spacing-sm $spacing-md;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-xs $spacing-sm;
+    margin: $spacing-xs 0;
+  }
+}
+
+// Button responsive sizing
+@mixin responsive-button {
+  padding: $spacing-sm $spacing-md;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.85rem;
+  }
+}
+
+// Input responsive sizing
+@mixin responsive-input {
+  padding: $spacing-sm;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    padding: $spacing-xs $spacing-sm;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: $spacing-xs;
+    font-size: 0.9rem;
+  }
+}
+
+// Text scaling with clamp
+@mixin fluid-text($min-size, $preferred-size, $max-size) {
+  font-size: clamp(#{$min-size}, #{$preferred-size}, #{$max-size});
+}
+
+// Container with responsive padding
+@mixin responsive-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 $spacing-md;
+
+  @media (max-width: 768px) {
+    padding: 0 $spacing-sm;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0 $spacing-xs;
+  }
+}
+
+// Grid with auto-fit columns
+@mixin auto-fit-grid($min-column-width: 250px, $gap: $spacing-md) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-column-width, 1fr));
+  gap: $gap;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(calc($min-column-width * 0.9), 1fr));
+    gap: $gap * 0.75;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: $gap * 0.5;
+  }
+}
+
+// Flex container with responsive direction
+@mixin responsive-flex($direction: row, $wrap: wrap) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: ($direction == row) and column or $direction;
+  }
+}

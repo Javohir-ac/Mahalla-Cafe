@@ -1,0 +1,24 @@
+{
+  "name": "mahalla-cafe",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mahalla Cafe - Restaurant Management System",
+  "scripts": {
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",
+    "postinstall": "echo ✅ Barcha dependencylar o'rnatildi! Frontend va Backend papkalariga o'tib npm run dev ishga tushiring"
+  },
+  "dependencies": {
+    "@fontsource/playfair-display": "^5.2.8",
+    "@fontsource/poppins": "^5.2.7",
+    "react-international-phone": "^4.6.0",
+    "react-scroll": "^1.9.3",
+    "web-vitals": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3"
+  }
+}

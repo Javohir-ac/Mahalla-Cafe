@@ -1,0 +1,15 @@
+{
+  "short_name": "Mahalla Cafe",
+  "name": "Mahalla Cafe - Restaurant Management System",
+  "icons": [
+    {
+      "src": "mahalla-cafe-lgo.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#8b4513",
+  "background_color": "#fff8f0"
+}

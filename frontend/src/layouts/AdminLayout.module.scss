@@ -1,0 +1,70 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.main {
+  flex: 1;
+  margin-top: 60px; // Fixed navbar height
+  margin-left: 256px; // Fixed sidebar width on desktop
+  padding: 2rem;
+  background: linear-gradient(to bottom, #fff8f0 0%, #ffffff 100%);
+  min-height: calc(100vh - 60px);
+  transition: all 0.3s ease;
+  width: calc(100% - 256px); // Adjust for sidebar
+  max-width: calc(100% - 256px); // Adjust for sidebar
+
+  // Tablet and mobile (below 1280px)
+  @media (max-width: 1279px) {
+    margin-left: 0;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  // Mobile
+  @media (max-width: 768px) {
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  // Small mobile
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+.content {
+  width: 100%;
+  padding: 0 20px;
+  max-width: 100%;
+
+  // Mobile
+  @media (max-width: 480px) {
+    padding: 0 10px;
+  }
+}
+
+// Desktop - sidebar always visible
+@media (min-width: 1280px) {
+  .main {
+    margin-left: 256px;
+    width: calc(100% - 256px);
+    max-width: calc(100% - 256px);
+  }
+}
+
+// Tablet and mobile - no margin for sidebar
+@media (max-width: 1279px) {
+  .main {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+}
