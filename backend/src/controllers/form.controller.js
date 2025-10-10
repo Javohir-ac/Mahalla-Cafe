@@ -3,8 +3,6 @@ const Order = require('../models/Order')
 
 /**
  * Handle contact form submission
- * @param {import('express').Request} req
- * @param {import('express').Response} res
  */
 const handleContactSubmission = async (req, res) => {
   try {
@@ -44,8 +42,6 @@ const handleContactSubmission = async (req, res) => {
 
 /**
  * Handle order form submission
- * @param {import('express').Request} req
- * @param {import('express').Response} res
  */
 const handleOrderSubmission = async (req, res) => {
   try {
@@ -69,16 +65,11 @@ const handleOrderSubmission = async (req, res) => {
         const title = String(item.title || "Noma'lum").trim()
         const quantity = parseInt(item.quantity) || 0
         const price = parseFloat(item.price) || 0
-        const itemTotal = quantity * price
-        totalAmount += itemTotal
-
-        cartDetails += `\n  ${index + 1}. ${title} - ${quantity} dona - $${price.toFixed(2)}`
-
-        orderItems.push({
-          title,
-          quantity,
-          price,
-        })
+        totalAmount += quantity * price
+        cartDetails += `\n  ${index + 1}. ${title} - ${quantity} dona - $${price.toFixed(
+          2
+        )}`
+        orderItems.push({ title, quantity, price })
       })
     }
 
@@ -87,7 +78,7 @@ const handleOrderSubmission = async (req, res) => {
       customerPhone: payload.phone,
       customerAddress: payload.address,
       items: orderItems,
-      totalAmount: totalAmount,
+      totalAmount,
       status: 'pending',
       notes: payload.note,
     }
@@ -97,13 +88,7 @@ const handleOrderSubmission = async (req, res) => {
 
     const result = await sendTelegramMessage({
       type: 'order',
-      data: {
-        name: payload.name,
-        phone: payload.phone,
-        address: payload.address,
-        product: payload.product,
-        note: payload.note,
-      },
+      data: payload,
       parseMode: 'Markdown',
     })
 
@@ -130,8 +115,6 @@ const handleOrderSubmission = async (req, res) => {
 
 /**
  * Handle reservation form submission
- * @param {import('express').Request} req
- * @param {import('express').Response} res
  */
 const handleReservationSubmission = async (req, res) => {
   try {
@@ -173,14 +156,11 @@ const handleReservationSubmission = async (req, res) => {
 }
 
 /**
- * Handle sending Telegram messages through backend
- * @param {import('express').Request} req
- * @param {import('express').Response} res
+ * Handle sending arbitrary Telegram messages
  */
 const sendTelegramMessageHandler = async (req, res) => {
   try {
     const { message } = req.body
-
     if (!message) {
       return res.status(400).json({
         success: false,
@@ -205,7 +185,6 @@ const sendTelegramMessageHandler = async (req, res) => {
       })
     }
   } catch (error) {
-    console.error('❌ Error sending Telegram message:', error)
     return res.status(500).json({
       success: false,
       message: '❌ Xabar yuborishda xatolik yuz berdi',

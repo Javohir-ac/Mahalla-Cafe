@@ -3,7 +3,11 @@
   "name": "Mahalla Cafe - Restaurant Management System",
   "icons": [
     {
+<<<<<<< HEAD
       "src": "mahalla-cafe-logo.png",
+=======
+      "src": "mahalla-cafe-lgo.png",
+>>>>>>> 3cbabff1d8d1a848a82f1189dd0b79d814e1d3f4
       "sizes": "32x32",
       "type": "image/png"
     }

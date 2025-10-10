@@ -40,7 +40,6 @@ const Order: React.FC = () => {
   const { addAlert } = useAlert()
 
   useEffect(() => {
-    // Load cart items from localStorage
     const loadCartItems = () => {
       try {
         const savedCart = localStorage.getItem('mahallaCart')
@@ -49,7 +48,6 @@ const Order: React.FC = () => {
         }
       } catch (error) {
         console.error('Error loading cart items:', error)
-        // Clear invalid cart data
         localStorage.removeItem('mahallaCart')
       } finally {
         setIsLoading(false)
@@ -57,12 +55,7 @@ const Order: React.FC = () => {
     }
 
     loadCartItems()
-
-    // Listen for cart updates
-    const handleCartUpdate = () => {
-      loadCartItems()
-    }
-
+    const handleCartUpdate = () => loadCartItems()
     window.addEventListener('cartUpdated', handleCartUpdate as EventListener)
 
     return () => {
@@ -75,44 +68,36 @@ const Order: React.FC = () => {
       removeItem(id)
       return
     }
-
     const updatedItems = cartItems.map(item =>
       item.id === id ? { ...item, quantity: newQuantity } : item
     )
-
     setCartItems(updatedItems)
     localStorage.setItem('mahallaCart', JSON.stringify(updatedItems))
-
-    // Update navbar cart count
     const totalItems = updatedItems.reduce((total, item) => total + item.quantity, 0)
-    const event = new CustomEvent('cartUpdated', { detail: { count: totalItems } })
-    window.dispatchEvent(event)
+    window.dispatchEvent(
+      new CustomEvent('cartUpdated', { detail: { count: totalItems } })
+    )
   }
 
   const removeItem = (id: number) => {
     const updatedItems = cartItems.filter(item => item.id !== id)
     setCartItems(updatedItems)
     localStorage.setItem('mahallaCart', JSON.stringify(updatedItems))
-
-    // Update navbar cart count
     const totalItems = updatedItems.reduce((total, item) => total + item.quantity, 0)
-    const event = new CustomEvent('cartUpdated', { detail: { count: totalItems } })
-    window.dispatchEvent(event)
+    window.dispatchEvent(
+      new CustomEvent('cartUpdated', { detail: { count: totalItems } })
+    )
   }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target
-    setOrderData(prev => ({
-      ...prev,
-      [name]: value,
-    }))
+    setOrderData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Validate form
     if (!orderData.name || !orderData.phone || !orderData.address) {
       addAlert({
         type: 'error',
@@ -126,22 +111,27 @@ const Order: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      // Format cart items for the API
       const formattedCartItems = cartItems.map(item => ({
         title: item.title,
         quantity: item.quantity,
         price: parseFloat(item.price?.replace('$', '') || '0'),
       }))
 
+      const orderPayload = {
+        name: orderData.name,
+        phone: orderData.phone,
+        address: orderData.address,
+        product: 'Online buyurtma',
+        note: orderData.note,
+        cartItems: formattedCartItems,
+      }
+
       const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
       const response = await fetch(`${BASE_URL}/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...orderData,
-          cartItems: formattedCartItems,
-        }),
+        body: JSON.stringify(orderPayload),
       })
 
       if (response.ok) {
@@ -150,26 +140,14 @@ const Order: React.FC = () => {
           addAlert({
             type: 'success',
             title: 'Muvaffaqiyat!',
-            message: '✅ Buyurtmangiz muvaffaqiyatli yuborildi!',
+            message: '✅ Buyurtma muvaffaqiyatli yuborildi!',
             duration: 5000,
           })
 
-          // Clear cart
           setCartItems([])
           localStorage.removeItem('mahallaCart')
-
-          // Update navbar cart count
-          const event = new CustomEvent('cartUpdated', { detail: { count: 0 } })
-          window.dispatchEvent(event)
-
-          // Reset form
-          setOrderData({
-            name: '',
-            phone: '',
-            address: '',
-            product: '',
-            note: '',
-          })
+          window.dispatchEvent(new CustomEvent('cartUpdated', { detail: { count: 0 } }))
+          setOrderData({ name: '', phone: '', address: '', product: '', note: '' })
         } else {
           addAlert({
             type: 'error',
@@ -205,7 +183,7 @@ const Order: React.FC = () => {
     return sum + price * item.quantity
   }, 0)
 
-  const tax = subtotal * 0.1 // 10% tax
+  const tax = subtotal * 0.1
   const total = subtotal + tax
 
   if (isLoading) {
@@ -252,9 +230,7 @@ const Order: React.FC = () => {
           Buyurtmangiz
         </motion.h1>
 
-        {/* Two-column layout */}
         <div className={styles.twoColumnLayout}>
-          {/* Left column - Food item details with scrollable container */}
           <div className={styles.foodDetailsContainer}>
             <div className={styles.foodDetailsHeader}>
               <h2>Tanlangan taomlar</h2>
@@ -300,7 +276,6 @@ const Order: React.FC = () => {
             </div>
           </div>
 
-          {/* Right column - Order form */}
           <div className={styles.orderForm}>
             <div className={styles.card}>
               <h2>Buyurtma berish</h2>
