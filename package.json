@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "Mahalla Cafe - Restaurant Management System",
+  "engines": {
+    "node": "^18.19.0 || ^20.9.0"
+  },
   "scripts": {
     "install-all": "npm install && cd frontend && npm install --legacy-peer-deps && cd ../backend && npm install",
     "dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npm run dev\"",

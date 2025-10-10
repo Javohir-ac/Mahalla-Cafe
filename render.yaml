@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: mahalla-cafe-frontend
+    env: node
+    rootDir: frontend
+    region: oregon
+    buildCommand: npm install --legacy-peer-deps && npm run build
+    startCommand: npx serve -s build -l 3000
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: NPM_FLAGS
+        value: --legacy-peer-deps
+
+  - type: web
+    name: mahalla-cafe-backend
+    env: node
+    rootDir: backend
+    region: oregon
+    buildCommand: npm install
+    startCommand: node src/server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: PORT
+        value: 5000
+      # Set these in Render dashboard with real values (do not commit secrets)
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_SECRET_CODE
+        sync: false
