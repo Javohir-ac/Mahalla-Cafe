@@ -5,7 +5,13 @@ const { sendSuccess, sendError } = require('../utils/response.utils')
 // Get all menu items
 const getAllMenuItems = async (req, res) => {
   try {
-    const menuItems = await Menu.find().sort({ createdAt: -1 })
+    // Check if category filter is provided
+    const filter = {}
+    if (req.query.category && req.query.category !== 'all') {
+      filter.category = req.query.category
+    }
+
+    const menuItems = await Menu.find(filter).sort({ createdAt: -1 })
     sendSuccess(res, menuItems, 'Menu items retrieved successfully')
   } catch (error) {
     console.error('Error getting menu items:', error)

@@ -32,31 +32,38 @@ const Menu: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
 
   // Load menu items from backend
-  useEffect(() => {
-    const loadMenuItems = async () => {
-      try {
-        setLoading(true)
-        const response = await menuService.getAll()
-        if (response.success && Array.isArray(response.data)) {
-          // Map imageUrl to image for compatibility
-          const itemsWithImage = response.data.map(item => ({
-            ...item,
-            image: item.imageUrl || item.image || '', // Use imageUrl or fallback to image
-          }))
-          setMenuItems(itemsWithImage as MenuPageItem[])
-        } else {
-          setError('Menyu elementlarini yuklab bo`lmadi')
-        }
-      } catch (err) {
+  const loadMenuItems = async (category?: string) => {
+    try {
+      setLoading(true)
+      const response = await menuService.getAll(category)
+      if (response.success && Array.isArray(response.data)) {
+        // Map imageUrl to image for compatibility
+        const itemsWithImage = response.data.map(item => ({
+          ...item,
+          image: item.imageUrl || item.image || '', // Use imageUrl or fallback to image
+        }))
+        setMenuItems(itemsWithImage as MenuPageItem[])
+      } else {
         setError('Menyu elementlarini yuklab bo`lmadi')
-        console.error('Error loading menu items:', err)
-      } finally {
-        setLoading(false)
       }
+    } catch (err) {
+      setError('Menyu elementlarini yuklab bo`lmadi')
+      console.error('Error loading menu items:', err)
+    } finally {
+      setLoading(false)
     }
+  }
 
-    loadMenuItems()
-  }, [])
+  // Load menu items when component mounts or category changes
+  useEffect(() => {
+    loadMenuItems(selectedCategory)
+  }, [selectedCategory])
+
+  // Handle search term changes
+  useEffect(() => {
+    // Only apply client-side search filtering if we have items
+    // Server-side category filtering is already applied
+  }, [searchTerm])
 
   const categories = [
     { id: 'all', name: 'Barcha taomlar' },
@@ -66,14 +73,12 @@ const Menu: React.FC = () => {
     { id: 'drink', name: 'Ichimliklar' },
   ]
 
-  // Filter items based on search term and category
+  // Filter items based on search term only (category filtering is done server-side)
   const filteredItems = menuItems.filter(item => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory =
-      selectedCategory === 'all' || item.category === selectedCategory
-    return matchesSearch && matchesCategory
+    return matchesSearch
   })
 
   // Handle adding item to cart
@@ -175,7 +180,6 @@ const Menu: React.FC = () => {
           Mazali taomlarimiz bilan tanishing
         </motion.p>
       </motion.div>
-
       <motion.div
         className={styles.container}
         initial={{ opacity: 0 }}
@@ -247,8 +251,7 @@ const Menu: React.FC = () => {
           )}
         </motion.div>
       </motion.div>
-
-      {/* Recipe Detail Modal */}
+      {/* Recipe Detail Modal */}{' '}
       {selectedRecipe && (
         <RecipeModal
           recipe={selectedRecipe}

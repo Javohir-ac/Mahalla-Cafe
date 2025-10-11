@@ -36,7 +36,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
       )}${image}`
     : image
 
-
   const handleAddToCart = () => {
     if (isAdding || !onAddToCart) return
 
@@ -64,7 +63,6 @@ const MenuCard: React.FC<MenuCardProps> = ({
     >
       <div className={styles.imageContainer}>
         <ImageLoader src={fullImageUrl} alt={title} className={styles.image} />
-        <ImageLoader src={image} alt={title} className={styles.image} />
       </div>
 
       <div className={styles.content}>

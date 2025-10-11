@@ -351,7 +351,16 @@ const AdminMenu: React.FC = () => {
               whileHover={{ y: -10 }}
             >
               <div className={styles.cardImage}>
-                <img src={item.image || '/assets/placeholder.jpg'} alt={item.name} />
+                <img
+                  src={
+                    item.image?.startsWith('/uploads/')
+                      ? `${(
+                          process.env.REACT_APP_API_URL || 'http://localhost:5000'
+                        ).replace('/api', '')}${item.image}`
+                      : item.image || '/assets/placeholder.jpg'
+                  }
+                  alt={item.name}
+                />
               </div>
               <div className={styles.cardContent}>
                 <div className={styles.cardHeader}>
@@ -441,7 +450,13 @@ const AdminMenu: React.FC = () => {
                   <td>
                     <div className={styles.tableImage}>
                       <img
-                        src={item.image || '/assets/placeholder.jpg'}
+                        src={
+                          item.image?.startsWith('/uploads/')
+                            ? `${(
+                                process.env.REACT_APP_API_URL || 'http://localhost:5000'
+                              ).replace('/api', '')}${item.image}`
+                            : item.image || '/assets/placeholder.jpg'
+                        }
                         alt={item.name}
                       />
                     </div>

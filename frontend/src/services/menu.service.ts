@@ -36,9 +36,15 @@ export interface MenuResponse {
 
 export const menuService = {
   // Get all menu items - Publicly accessible
-  getAll: async (): Promise<MenuResponse> => {
+  getAll: async (category?: string): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
+      // Construct URL with optional category parameter
+      let url = `${normalizedBaseUrl}/menu`
+      if (category && category !== 'all') {
+        url += `?category=${encodeURIComponent(category)}`
+      }
+
+      const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +74,7 @@ export const menuService = {
   // Get menu items for recipes - Publicly accessible
   getForRecipes: async (): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +104,7 @@ export const menuService = {
   // Get menu item by ID - Publicly accessible
   getById: async (id: string): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +136,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -163,7 +169,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +203,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -230,7 +236,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +270,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
