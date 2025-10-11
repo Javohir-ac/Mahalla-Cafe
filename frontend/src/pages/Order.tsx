@@ -9,7 +9,7 @@ import { useAlert } from '../contexts/AlertContext'
 import styles from './Order.module.scss'
 
 interface CartItem {
-  id: number
+  id: string
   image: string
   title: string
   description: string
@@ -63,7 +63,7 @@ const Order: React.FC = () => {
     }
   }, [])
 
-  const updateQuantity = (id: number, newQuantity: number) => {
+  const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) {
       removeItem(id)
       return
@@ -79,7 +79,7 @@ const Order: React.FC = () => {
     )
   }
 
-  const removeItem = (id: number) => {
+  const removeItem = (id: string) => {
     const updatedItems = cartItems.filter(item => item.id !== id)
     setCartItems(updatedItems)
     localStorage.setItem('mahallaCart', JSON.stringify(updatedItems))
