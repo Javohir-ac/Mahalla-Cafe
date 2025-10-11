@@ -75,7 +75,13 @@ const AdminMenu: React.FC = () => {
     return () => clearTimeout(timer)
   }, [menuItems, searchQuery, categoryFilter])
 
-  const categories = ['Barchasi', 'Salat', 'Asosiy ovqat', 'Shirinlik', 'Ichimlik']
+  const categories = [
+    { id: 'all', name: 'Barchasi' },
+    { id: 'Salat', name: 'Salat' },
+    { id: 'Asosiy ovqat', name: 'Asosiy ovqat' },
+    { id: 'Shirinlik', name: 'Shirinlik' },
+    { id: 'Ichimlik', name: 'Ichimlik' },
+  ]
 
   const handleAddNewItem = () => {
     setCurrentItem(null)
@@ -235,10 +241,7 @@ const AdminMenu: React.FC = () => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory =
-      categoryFilter === 'all' ||
-      categoryFilter === 'Barchasi' ||
-      item.category === categoryFilter
+    const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter
     return matchesSearch && matchesCategory
   })
 
@@ -308,8 +311,8 @@ const AdminMenu: React.FC = () => {
             onChange={e => setCategoryFilter(e.target.value)}
           >
             {categories.map(category => (
-              <option key={category} value={category === 'Barchasi' ? 'all' : category}>
-                {category}
+              <option key={category.id} value={category.id}>
+                {category.name}
               </option>
             ))}
           </select>
@@ -357,9 +360,9 @@ const AdminMenu: React.FC = () => {
                 <img
                   src={
                     item.image?.startsWith('/uploads/')
-                      ? `${(
-                          process.env.REACT_APP_API_URL || 'http://localhost:5000'
-                        ).replace(/\/$/, '')}${item.image}`
+                      ? `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${
+                          item.image
+                        }`
                       : item.image || '/assets/placeholder.jpg'
                   }
                   alt={item.name}
@@ -455,9 +458,9 @@ const AdminMenu: React.FC = () => {
                       <img
                         src={
                           item.image?.startsWith('/uploads/')
-                            ? `${(
+                            ? `${
                                 process.env.REACT_APP_API_URL || 'http://localhost:5000'
-                              ).replace(/\/$/, '')}${item.image}`
+                              }${item.image}`
                             : item.image || '/assets/placeholder.jpg'
                         }
                         alt={item.name}
