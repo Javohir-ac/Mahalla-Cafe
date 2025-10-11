@@ -9,11 +9,16 @@
   "scripts": {
     "install-all": "npm install && cd frontend && npm install --legacy-peer-deps && cd ../backend && npm install",
     "build": "npm run build-frontend",
-    "start": "node start.js",
+    "start": "node dev.js",
+    "dev": "node dev.js",
     "build-frontend": "cd frontend && npm run build",
+    "dev-frontend": "cd frontend && npm run dev",
+    "dev-backend": "cd backend && npm run dev",
     "start-backend": "cd backend && npm start",
-    "start-frontend": "cd frontend && serve -s build",
-    "postinstall": "echo ✅ Dependencies installed! Run 'npm run build' to build frontend and 'npm run start' to launch the full project."
+    "start-frontend": "cd frontend && npm run serve",
+    "serve": "cd frontend && npx serve -s build",
+    "postinstall": "npm run install-backend && npm run build-frontend",
+    "install-backend": "cd backend && npm install"
   },
   "dependencies": {
     "serve": "^14.2.5"

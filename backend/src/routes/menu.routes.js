@@ -11,14 +11,14 @@ const { uploadMenuImage, handleMulterError } = require('../middleware/upload.mid
 
 const router = express.Router()
 
-// Apply admin authorization middleware to all routes
-router.use(authorizeAdmin)
-
-// GET /api/menu - Get all menu items
+// GET /api/menu - Get all menu items (publicly accessible)
 router.get('/', getAllMenuItems)
 
-// GET /api/menu/:id - Get menu item by ID
+// GET /api/menu/:id - Get menu item by ID (publicly accessible)
 router.get('/:id', getMenuItemById)
+
+// Apply admin authorization middleware to protected routes
+router.use(authorizeAdmin)
 
 // POST /api/menu - Create new menu item with image upload
 router.post('/', uploadMenuImage, handleMulterError, createMenuItem)
