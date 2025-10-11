@@ -49,9 +49,6 @@ app.use(express.json())
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')))
 
-// Serve static files from frontend build directory
-app.use(express.static(path.join(__dirname, '..', '..', 'frontend', 'build')))
-
 // Routes
 app.use('/api/auth', authRoutes)
 app.use('/api', formRoutes)
@@ -63,17 +60,11 @@ app.use('/api/menu', menuRoutes)
 app.use('/api/activity', activityRoutes)
 app.use('/api/dashboard', dashboardRoutes)
 
-// Serve React app for all non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'frontend', 'build', 'index.html'))
-})
-
 // Database connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    const server = app.listen(PORT, () => {
-    })
+    const server = app.listen(PORT, () => {})
 
     // Graceful shutdown
     process.on('SIGINT', () => {
