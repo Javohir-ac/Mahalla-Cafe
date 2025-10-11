@@ -35,7 +35,10 @@ const Reservation: React.FC = () => {
     try {
       const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
-      const response = await fetch(`${BASE_URL}/reservation`, {
+      // Remove trailing slash if present to prevent double slashes in URLs
+      const normalizedBaseUrl = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL
+
+      const response = await fetch(`${normalizedBaseUrl}/api/reservation`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

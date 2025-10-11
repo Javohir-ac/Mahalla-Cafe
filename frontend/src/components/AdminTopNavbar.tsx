@@ -48,7 +48,7 @@ const AdminTopNavbar: React.FC<AdminTopNavbarProps> = ({ setIsSidebarOpen }) => 
   const unreadCount = notifications.filter(n => !n.read).length
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken')
+    localStorage.removeItem('admin')
     navigate('/admin/login')
   }
 
