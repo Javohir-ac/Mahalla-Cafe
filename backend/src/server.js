@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000
 // CORS configuration - Updated for Render deployment
 const allowedOrigins = [
   'https://mahalla-cafe-buxorodagi-eng-zo-r-kafe.onrender.com',
+  'https://mahalla-cafe-backend.onrender.com',
   'http://localhost:3000',
   'http://localhost:5000',
 ]

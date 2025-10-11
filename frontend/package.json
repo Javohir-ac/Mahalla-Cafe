@@ -2,6 +2,10 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mahalla-cafe.netlify.app",
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "@fontsource/playfair-display": "^5.2.8",
     "@fontsource/poppins": "^5.2.7",
@@ -23,13 +27,12 @@
     "web-vitals": "^5.1.0"
   },
   "scripts": {
-    "dev": "react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "serve": "npx serve -s build"
+    "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://mahalla-cafe-backend.onrender.com",
   "browserslist": {
     "production": [
       ">0.2%",
