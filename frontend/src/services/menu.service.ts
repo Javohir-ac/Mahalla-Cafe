@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -39,27 +34,13 @@ export const menuService = {
   getAll: async (category?: string): Promise<MenuResponse> => {
     try {
       // Construct URL with optional category parameter
-      let url = `${normalizedBaseUrl}/menu`
+      let url = '/menu'
       if (category && category !== 'all') {
         url += `?category=${encodeURIComponent(category)}`
       }
 
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-      }
-
-      const result = await response.json()
-      return result
+      const response = await apiClient.get(url)
+      return response.data
     } catch (error) {
       console.error('Get menu items error:', error)
       return {
@@ -74,22 +55,8 @@ export const menuService = {
   // Get menu items for recipes - Publicly accessible
   getForRecipes: async (): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/menu`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-      }
-
-      const result = await response.json()
-      return result
+      const response = await apiClient.get('/menu')
+      return response.data
     } catch (error) {
       console.error('Get menu items for recipes error:', error)
       return {
@@ -104,22 +71,8 @@ export const menuService = {
   // Get menu item by ID - Publicly accessible
   getById: async (id: string): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-      }
-
-      const result = await response.json()
-      return result
+      const response = await apiClient.get(`/menu/${id}`)
+      return response.data
     } catch (error) {
       console.error('Get menu item error:', error)
       return {
@@ -136,23 +89,15 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/menu`, {
-        method: 'POST',
+      const config = {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.post('/menu', formData, config)
+      return response.data
     } catch (error) {
       console.error('Create menu item with image error:', error)
       return {
@@ -169,24 +114,14 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/menu`, {
-        method: 'POST',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(menuItem),
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.post('/menu', menuItem, config)
+      return response.data
     } catch (error) {
       console.error('Create menu item error:', error)
       return {
@@ -203,23 +138,15 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
-        method: 'PUT',
+      const config = {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
-        body: formData,
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.put(`/menu/${id}`, formData, config)
+      return response.data
     } catch (error) {
       console.error('Update menu item with image error:', error)
       return {
@@ -236,24 +163,14 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
-        method: 'PUT',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(menuItem),
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.put(`/menu/${id}`, menuItem, config)
+      return response.data
     } catch (error) {
       console.error('Update menu item error:', error)
       return {
@@ -270,23 +187,14 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/menu/${id}`, {
-        method: 'DELETE',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
-
-      // Check if response is OK
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('Server returned non-JSON response:', errorText)
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
       }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.delete(`/menu/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Delete menu item error:', error)
       return {

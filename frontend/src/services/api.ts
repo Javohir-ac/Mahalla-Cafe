@@ -53,7 +53,7 @@ export const apiService = {
   // Menu items
   getMenuItems: async () => {
     try {
-      return await apiClient.get('/api/menu')
+      return await apiClient.get('/menu')
     } catch (error) {
       throw new Error('Menyu elementlarini yuklab bo`lmadi')
     }
@@ -62,7 +62,7 @@ export const apiService = {
   // Get single menu item
   getMenuItem: async (id: string | number) => {
     try {
-      return await apiClient.get(`/api/menu/${id}`)
+      return await apiClient.get(`/menu/${id}`)
     } catch (error) {
       throw new Error('Menyu elementini yuklab bo`lmadi')
     }
@@ -71,7 +71,7 @@ export const apiService = {
   // Cart operations
   addToCart: async (itemId: number, quantity: number) => {
     try {
-      return await apiClient.post('/api/cart', { itemId, quantity })
+      return await apiClient.post('/cart', { itemId, quantity })
     } catch (error) {
       throw new Error('Elementni savatga qo`shib bo`lmadi')
     }
@@ -80,7 +80,7 @@ export const apiService = {
   // Contact form submission
   submitContactForm: async (formData: any) => {
     try {
-      return await apiClient.post('/api/contact', formData)
+      return await apiClient.post('/contact', formData)
     } catch (error) {
       throw new Error('Aloqa formasini yuborib bo`lmadi')
     }
