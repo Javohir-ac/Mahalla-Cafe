@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -46,16 +41,14 @@ export const orderService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/orders`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.get('/orders', config)
+      return response.data
     } catch (error) {
       console.error('Get orders error:', error)
       return {
@@ -70,16 +63,14 @@ export const orderService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/orders/${id}`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.get(`/orders/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Get order error:', error)
       return {
@@ -94,17 +85,14 @@ export const orderService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/orders/${id}`, {
-        method: 'PUT',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ status }),
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.put(`/orders/${id}`, { status }, config)
+      return response.data
     } catch (error) {
       console.error('Update order error:', error)
       return {
@@ -119,16 +107,14 @@ export const orderService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/orders/${id}`, {
-        method: 'DELETE',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.delete(`/orders/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Delete order error:', error)
       return {

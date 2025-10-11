@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 interface AdminCheckResponse {
   success: boolean
@@ -17,15 +12,8 @@ export const adminCheckService = {
   // Check if any admin exists in the system
   checkAdminExists: async (): Promise<AdminCheckResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/check`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      return await response.json()
+      const response = await apiClient.get('/auth/admin/check')
+      return response.data
     } catch (error) {
       // If there's a network error, we'll assume no admin exists
       console.error('Admin check error:', error)

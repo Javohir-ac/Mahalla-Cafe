@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 interface AdminRegisterData {
   username: string
@@ -33,16 +28,8 @@ export const adminService = {
   // Admin registration
   register: async (data: AdminRegisterData): Promise<AdminAuthResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(data),
-      })
-
-      return await response.json()
+      const response = await apiClient.post('/auth/admin/register', data)
+      return response.data
     } catch (error) {
       console.error('Admin registration error:', error)
       return {
@@ -55,16 +42,8 @@ export const adminService = {
   // Admin login
   login: async (data: AdminLoginData): Promise<AdminAuthResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(data),
-      })
-
-      return await response.json()
+      const response = await apiClient.post('/auth/admin/login', data)
+      return response.data
     } catch (error) {
       console.error('Admin login error:', error)
       return {

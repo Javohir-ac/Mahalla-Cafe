@@ -34,7 +34,7 @@ export const menuService = {
   getAll: async (category?: string): Promise<MenuResponse> => {
     try {
       // Construct URL with optional category parameter
-      let url = '/api/menu'
+      let url = '/menu'
       if (category && category !== 'all') {
         url += `?category=${encodeURIComponent(category)}`
       }
@@ -55,7 +55,7 @@ export const menuService = {
   // Get menu items for recipes - Publicly accessible
   getForRecipes: async (): Promise<MenuResponse> => {
     try {
-      const response = await apiClient.get('/api/menu')
+      const response = await apiClient.get('/menu')
       return response.data
     } catch (error) {
       console.error('Get menu items for recipes error:', error)
@@ -71,7 +71,7 @@ export const menuService = {
   // Get menu item by ID - Publicly accessible
   getById: async (id: string): Promise<MenuResponse> => {
     try {
-      const response = await apiClient.get(`/api/menu/${id}`)
+      const response = await apiClient.get(`/menu/${id}`)
       return response.data
     } catch (error) {
       console.error('Get menu item error:', error)
@@ -96,7 +96,7 @@ export const menuService = {
         },
       }
 
-      const response = await apiClient.post('/api/menu', formData, config)
+      const response = await apiClient.post('/menu', formData, config)
       return response.data
     } catch (error) {
       console.error('Create menu item with image error:', error)
@@ -120,7 +120,7 @@ export const menuService = {
         },
       }
 
-      const response = await apiClient.post('/api/menu', menuItem, config)
+      const response = await apiClient.post('/menu', menuItem, config)
       return response.data
     } catch (error) {
       console.error('Create menu item error:', error)
@@ -145,7 +145,7 @@ export const menuService = {
         },
       }
 
-      const response = await apiClient.put(`/api/menu/${id}`, formData, config)
+      const response = await apiClient.put(`/menu/${id}`, formData, config)
       return response.data
     } catch (error) {
       console.error('Update menu item with image error:', error)
@@ -169,7 +169,7 @@ export const menuService = {
         },
       }
 
-      const response = await apiClient.put(`/api/menu/${id}`, menuItem, config)
+      const response = await apiClient.put(`/menu/${id}`, menuItem, config)
       return response.data
     } catch (error) {
       console.error('Update menu item error:', error)
@@ -193,7 +193,7 @@ export const menuService = {
         },
       }
 
-      const response = await apiClient.delete(`/api/menu/${id}`, config)
+      const response = await apiClient.delete(`/menu/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Delete menu item error:', error)

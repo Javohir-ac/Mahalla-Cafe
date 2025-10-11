@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -58,15 +53,14 @@ export const dashboardService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/dashboard/stats`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      return await response.json()
+      const response = await apiClient.get('/dashboard/stats', config)
+      return response.data
     } catch (error) {
       console.error('Get dashboard stats error:', error)
       return {

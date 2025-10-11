@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -44,16 +39,14 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/recipes`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.get('/recipes', config)
+      return response.data
     } catch (error) {
       console.error('Get recipes error:', error)
       return {
@@ -68,16 +61,14 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.get(`/recipes/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Get recipe error:', error)
       return {
@@ -92,17 +83,14 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/recipes`, {
-        method: 'POST',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(recipe),
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.post('/recipes', recipe, config)
+      return response.data
     } catch (error) {
       console.error('Create recipe error:', error)
       return {
@@ -117,17 +105,14 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
-        method: 'PUT',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(recipe),
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.put(`/recipes/${id}`, recipe, config)
+      return response.data
     } catch (error) {
       console.error('Update recipe error:', error)
       return {
@@ -142,16 +127,14 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
-        method: 'DELETE',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
-      return result
+      const response = await apiClient.delete(`/recipes/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Delete recipe error:', error)
       return {

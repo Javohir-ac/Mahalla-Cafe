@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 interface AuthResponse {
   success: boolean
@@ -22,16 +17,8 @@ export const authService = {
   // Admin login
   loginAdmin: async (username: string, password: string): Promise<AuthResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-        credentials: 'include',
-      })
-
-      return await response.json()
+      const response = await apiClient.post('/auth/admin/login', { username, password })
+      return response.data
     } catch (error) {
       console.error('Login error:', error)
       return {
@@ -48,16 +35,12 @@ export const authService = {
     secretCode: string
   ): Promise<AuthResponse> => {
     try {
-      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password, secretCode }),
-        credentials: 'include',
+      const response = await apiClient.post('/auth/admin/register', {
+        username,
+        password,
+        secretCode,
       })
-
-      return await response.json()
+      return response.data
     } catch (error) {
       console.error('Registration error:', error)
       return {
