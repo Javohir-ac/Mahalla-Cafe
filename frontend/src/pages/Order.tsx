@@ -252,7 +252,16 @@ const Order: React.FC = () => {
                   }}
                 >
                   <div className={styles.foodImage}>
-                    <ImageLoader src={item.image} alt={item.title} />
+                    <ImageLoader
+                      src={
+                        item.image?.startsWith('/uploads/')
+                          ? `${process.env.REACT_APP_API_URL || 'http://localhost:5000'}${
+                              item.image
+                            }`
+                          : item.image || ''
+                      }
+                      alt={item.title}
+                    />
                   </div>
                   <div className={styles.foodInfo}>
                     <h3 className={styles.foodTitle}>{item.title}</h3>

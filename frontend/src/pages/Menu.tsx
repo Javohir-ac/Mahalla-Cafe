@@ -17,6 +17,15 @@ interface MenuPageItem {
   imageUrl?: string // Add imageUrl property
 }
 
+// Category mapping from client-side IDs to backend category names
+const CATEGORY_MAPPING: Record<string, string> = {
+  all: '',
+  main: 'Asosiy ovqat',
+  salad: 'Salat',
+  dessert: 'Shirinlik',
+  drink: 'Ichimlik',
+}
+
 // Recipe details data
 const recipeDetails: Record<string, { ingredients: string[]; instructions: string[] }> = {
   // This will be replaced with data from the backend
@@ -35,7 +44,10 @@ const Menu: React.FC = () => {
   const loadMenuItems = async (category?: string) => {
     try {
       setLoading(true)
-      const response = await menuService.getAll(category)
+      // Map client-side category ID to backend category name
+      const backendCategory =
+        category && CATEGORY_MAPPING[category] ? CATEGORY_MAPPING[category] : category
+      const response = await menuService.getAll(backendCategory)
       if (response.success && Array.isArray(response.data)) {
         // Map imageUrl to image for compatibility
         const itemsWithImage = response.data.map(item => ({
