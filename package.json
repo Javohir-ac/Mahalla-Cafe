@@ -17,7 +17,7 @@
     "start-backend": "cd backend && npm start",
     "start-frontend": "cd frontend && npm run serve",
     "serve": "cd frontend && npx serve -s build",
-    "postinstall": "npm run install-backend && npm run build-frontend",
+    "postinstall": "npm run install-all",
     "install-backend": "cd backend && npm install"
   },
   "dependencies": {

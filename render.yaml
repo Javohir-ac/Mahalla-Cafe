@@ -11,6 +11,8 @@ services:
         value: 18
       - key: NPM_FLAGS
         value: --legacy-peer-deps
+      - key: REACT_APP_API_URL
+        value: https://mahalla-cafe-backend.onrender.com/api
 
   - type: web
     name: mahalla-cafe-backend

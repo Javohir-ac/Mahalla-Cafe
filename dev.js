@@ -52,7 +52,11 @@ const frontend = spawnProcess(
   {
     cwd: path.join(__dirname, 'frontend'),
     stdio: 'pipe',
-    env: process.env,
+    env: {
+      ...process.env,
+      // Frontend proxy uchun backend manzilini belgilash
+      REACT_APP_API_URL: 'http://localhost:5000/api',
+    },
   },
   'FRONTEND'
 )
