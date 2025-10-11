@@ -5,14 +5,16 @@ services:
     rootDir: frontend
     region: oregon
     buildCommand: npm install --legacy-peer-deps && npm run build
-    startCommand: npx serve -s build -l 3000
+    startCommand: npx serve -s build
     envVars:
       - key: NODE_VERSION
-        value: 18
+        value: 20
       - key: NPM_FLAGS
         value: --legacy-peer-deps
       - key: REACT_APP_API_URL
-        value: https://mahalla-cafe-backend.onrender.com/api
+        value: https://YOUR_RENDER_BACKEND_URL.onrender.com
+      - key: PORT
+        value: 3000
 
   - type: web
     name: mahalla-cafe-backend
@@ -23,7 +25,7 @@ services:
     startCommand: node src/server.js
     envVars:
       - key: NODE_VERSION
-        value: 18
+        value: 20
       - key: PORT
         value: 5000
       # Set these in Render dashboard with real values (do not commit secrets)

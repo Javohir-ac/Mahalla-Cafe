@@ -4,7 +4,7 @@
   "private": true,
   "description": "Mahalla Cafe - Fullstack Project",
   "engines": {
-    "node": "^18.19.0 || ^20.9.0"
+    "node": "20.x"
   },
   "scripts": {
     "install-all": "npm install && cd frontend && npm install --legacy-peer-deps && cd ../backend && npm install",
@@ -15,7 +15,7 @@
     "dev-frontend": "cd frontend && npm run dev",
     "dev-backend": "cd backend && npm run dev",
     "start-backend": "cd backend && npm start",
-    "start-frontend": "cd frontend && npm run serve",
+    "start-frontend": "cd frontend && npm run start",
     "serve": "cd frontend && npx serve -s build",
     "postinstall": "npm run install-all",
     "install-backend": "cd backend && npm install"
