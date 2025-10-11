@@ -1,5 +1,10 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
+// Remove trailing slash if present to prevent double slashes in URLs
+const normalizedBaseUrl = API_BASE_URL.endsWith('/')
+  ? API_BASE_URL.slice(0, -1)
+  : API_BASE_URL
+
 // Get auth token from localStorage
 const getAuthToken = () => {
   const adminData = localStorage.getItem('admin')
@@ -33,7 +38,7 @@ export const menuService = {
   // Get all menu items - Publicly accessible
   getAll: async (): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +68,7 @@ export const menuService = {
   // Get menu items for recipes - Publicly accessible
   getForRecipes: async (): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +98,7 @@ export const menuService = {
   // Get menu item by ID - Publicly accessible
   getById: async (id: string): Promise<MenuResponse> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +130,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -158,7 +163,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/menu`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +197,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -225,7 +230,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -259,7 +264,7 @@ export const menuService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/menu/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/menu/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

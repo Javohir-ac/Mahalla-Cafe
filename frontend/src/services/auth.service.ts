@@ -1,5 +1,10 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
+// Remove trailing slash if present to prevent double slashes in URLs
+const normalizedBaseUrl = API_BASE_URL.endsWith('/')
+  ? API_BASE_URL.slice(0, -1)
+  : API_BASE_URL
+
 interface AuthResponse {
   success: boolean
   message: string
@@ -17,7 +22,7 @@ export const authService = {
   // Admin login
   loginAdmin: async (username: string, password: string): Promise<AuthResponse> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/admin/login`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,7 +48,7 @@ export const authService = {
     secretCode: string
   ): Promise<AuthResponse> => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/admin/register`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/auth/admin/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

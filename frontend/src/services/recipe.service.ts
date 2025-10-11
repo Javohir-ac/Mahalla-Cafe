@@ -1,5 +1,10 @@
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
+// Remove trailing slash if present to prevent double slashes in URLs
+const normalizedBaseUrl = API_BASE_URL.endsWith('/')
+  ? API_BASE_URL.slice(0, -1)
+  : API_BASE_URL
+
 // Get auth token from localStorage
 const getAuthToken = () => {
   const adminData = localStorage.getItem('admin')
@@ -39,7 +44,7 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/recipes`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/recipes`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -63,7 +68,7 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/recipes/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +92,7 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/recipes`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/recipes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +117,7 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/recipes/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +142,7 @@ export const recipeService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${API_BASE_URL}/recipes/${id}`, {
+      const response = await fetch(`${normalizedBaseUrl}/api/recipes/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

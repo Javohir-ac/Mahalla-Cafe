@@ -6,8 +6,11 @@ import axios from 'axios'
 // Create axios instance with default config
 const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
 
+// Remove trailing slash if present to prevent double slashes in URLs
+const normalizedBaseUrl = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL
+
 const apiClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: normalizedBaseUrl,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -50,7 +53,7 @@ export const apiService = {
   // Menu items
   getMenuItems: async () => {
     try {
-      return await apiClient.get('/menu')
+      return await apiClient.get('/api/menu')
     } catch (error) {
       throw new Error('Menyu elementlarini yuklab bo`lmadi')
     }
@@ -59,7 +62,7 @@ export const apiService = {
   // Get single menu item
   getMenuItem: async (id: string | number) => {
     try {
-      return await apiClient.get(`/menu/${id}`)
+      return await apiClient.get(`/api/menu/${id}`)
     } catch (error) {
       throw new Error('Menyu elementini yuklab bo`lmadi')
     }
@@ -68,7 +71,7 @@ export const apiService = {
   // Cart operations
   addToCart: async (itemId: number, quantity: number) => {
     try {
-      return await apiClient.post('/cart', { itemId, quantity })
+      return await apiClient.post('/api/cart', { itemId, quantity })
     } catch (error) {
       throw new Error('Elementni savatga qo`shib bo`lmadi')
     }
@@ -77,7 +80,7 @@ export const apiService = {
   // Contact form submission
   submitContactForm: async (formData: any) => {
     try {
-      return await apiClient.post('/contact', formData)
+      return await apiClient.post('/api/contact', formData)
     } catch (error) {
       throw new Error('Aloqa formasini yuborib bo`lmadi')
     }
