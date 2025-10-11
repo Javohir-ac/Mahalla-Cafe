@@ -1,9 +1,4 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-
-// Remove trailing slash if present to prevent double slashes in URLs
-const normalizedBaseUrl = API_BASE_URL.endsWith('/')
-  ? API_BASE_URL.slice(0, -1)
-  : API_BASE_URL
+import apiClient from './api'
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -54,15 +49,14 @@ export const activityService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/activity`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
+      const response = await apiClient.get('/activity', config)
+      const result = response.data
 
       // Normalize the data to ensure consistent structure
       if (result.success && result.data) {
@@ -88,15 +82,14 @@ export const activityService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/activity/${id}`, {
-        method: 'GET',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      const result = await response.json()
+      const response = await apiClient.get(`/activity/${id}`, config)
+      const result = response.data
 
       // Normalize the data to ensure consistent structure
       if (result.success && result.data) {
@@ -118,15 +111,14 @@ export const activityService = {
     try {
       const token = getAuthToken()
 
-      const response = await fetch(`${normalizedBaseUrl}/api/activity/${id}`, {
-        method: 'DELETE',
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      })
+      }
 
-      return await response.json()
+      const response = await apiClient.delete(`/activity/${id}`, config)
+      return response.data
     } catch (error) {
       console.error('Delete activity log error:', error)
       return {

@@ -10,22 +10,33 @@ const AdminLogin: React.FC = () => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [adminExists, setAdminExists] = useState<boolean | null>(null)
+  const [checkingStatus, setCheckingStatus] = useState(true)
   const navigate = useNavigate()
 
   // Check if admin exists on component mount
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
+        setCheckingStatus(true)
         const response = await adminCheckService.checkAdminExists()
+
         if (response.success && response.data) {
           setAdminExists(response.data.adminExists)
           // If no admin exists, redirect to register page
           if (!response.data.adminExists) {
             navigate('/admin/register')
           }
+        } else {
+          // Handle error response
+          setError(response.message || 'Failed to check admin status')
+          setAdminExists(false) // Assume no admin exists to allow registration
         }
       } catch (err) {
         console.error('Error checking admin status:', err)
+        setError('Failed to check admin status')
+        setAdminExists(false) // Assume no admin exists to allow registration
+      } finally {
+        setCheckingStatus(false)
       }
     }
 
@@ -40,11 +51,11 @@ const AdminLogin: React.FC = () => {
     try {
       const response = await adminService.login({ username, password })
 
-      if (response.success) {
+      if (response.success && response.data) {
         // Save admin data to localStorage
         const adminData = {
-          user: response.data!.user,
-          token: response.data!.token,
+          user: response.data.user,
+          token: response.data.token,
         }
         localStorage.setItem('admin', JSON.stringify(adminData))
         // Dispatch event to notify navbar of admin status change
@@ -52,7 +63,7 @@ const AdminLogin: React.FC = () => {
         // Redirect to admin dashboard
         navigate('/admin')
       } else {
-        setError(response.message)
+        setError(response.message || 'Login failed')
       }
     } catch (err) {
       setError('Kutilmagan xatolik yuz berdi')
@@ -62,19 +73,37 @@ const AdminLogin: React.FC = () => {
   }
 
   // Show loading state while checking admin status
-  if (adminExists === null) {
+  if (checkingStatus) {
     return (
       <div className={styles.container}>
         <div className={styles.formWrapper}>
-          <h2>Checking system status...</h2>
-          <p>Loading...</p>
+          <h2>Tizim holati tekshirilmoqda...</h2>
+          <p>Yuklanmoqda...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show error message if there was an error checking admin status
+  if (error && adminExists === null) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.formWrapper}>
+          <h2>Administrator kirish</h2>
+          <div className={styles.error}>
+            <p>Xatolik yuz berdi: {error}</p>
+            <p>Iltimos, sahifani qayta yuklang yoki keyinroq urinib ko'ring.</p>
+          </div>
+          <div className={styles.registerLink}>
+            <Link to='/admin/register'>Ro'yxatdan o'tish sahifasiga o'tish</Link>
+          </div>
         </div>
       </div>
     )
   }
 
   // If no admin exists, show message instead of form
-  if (!adminExists) {
+  if (adminExists === false) {
     return (
       <div className={styles.container}>
         <div className={styles.formWrapper}>

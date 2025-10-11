@@ -112,6 +112,8 @@ const checkAdminExists = async (req, res) => {
     // Check if any admin user exists in the database
     const adminUser = await User.findOne({ role: 'admin' })
 
+    console.log('Admin check result:', adminUser ? 'Admin found' : 'No admin found')
+
     sendSuccess(
       res,
       {

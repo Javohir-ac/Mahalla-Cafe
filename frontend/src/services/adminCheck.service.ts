@@ -14,15 +14,25 @@ export const adminCheckService = {
     try {
       const response = await apiClient.get('/auth/admin/check')
       return response.data
-    } catch (error) {
+    } catch (error: any) {
       // If there's a network error, we'll assume no admin exists
       console.error('Admin check error:', error)
+
+      // Check if it's a CORS or network error
+      if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
+        return {
+          success: true,
+          message: 'Network error during admin check',
+          data: {
+            adminExists: false,
+          },
+        }
+      }
+
+      // For other errors, return the actual error
       return {
-        success: true,
-        message: 'Network error during admin check',
-        data: {
-          adminExists: false,
-        },
+        success: false,
+        message: error.response?.data?.message || 'Server error during admin check',
       }
     }
   },
