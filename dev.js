@@ -55,7 +55,7 @@ const frontend = spawnProcess(
     env: {
       ...process.env,
       // Frontend proxy uchun backend manzilini belgilash
-      REACT_APP_API_URL: 'http://localhost:5000/api',
+      REACT_APP_API_URL: 'http://localhost:5000',
     },
   },
   'FRONTEND'

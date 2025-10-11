@@ -17,7 +17,10 @@ export const authService = {
   // Admin login
   loginAdmin: async (username: string, password: string): Promise<AuthResponse> => {
     try {
-      const response = await apiClient.post('/auth/admin/login', { username, password })
+      const response = await apiClient.post('/api/auth/admin/login', {
+        username,
+        password,
+      })
       return response.data
     } catch (error) {
       console.error('Login error:', error)
@@ -35,7 +38,7 @@ export const authService = {
     secretCode: string
   ): Promise<AuthResponse> => {
     try {
-      const response = await apiClient.post('/auth/admin/register', {
+      const response = await apiClient.post('/api/auth/admin/register', {
         username,
         password,
         secretCode,

@@ -235,8 +235,8 @@ const Menu: React.FC = () => {
                   image={
                     item.imageUrl?.startsWith('/uploads/') // Use imageUrl if available
                       ? `${(
-                          process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-                        ).replace('/api', '')}${item.imageUrl}`
+                          process.env.REACT_APP_API_URL || 'http://localhost:5000'
+                        ).replace(/\/$/, '')}${item.imageUrl}`
                       : item.image || '' // Fallback to image
                   }
                   title={item.name}

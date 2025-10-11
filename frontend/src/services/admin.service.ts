@@ -28,7 +28,7 @@ export const adminService = {
   // Admin registration
   register: async (data: AdminRegisterData): Promise<AdminAuthResponse> => {
     try {
-      const response = await apiClient.post('/auth/admin/register', data)
+      const response = await apiClient.post('/api/auth/admin/register', data)
       return response.data
     } catch (error) {
       console.error('Admin registration error:', error)
@@ -42,7 +42,7 @@ export const adminService = {
   // Admin login
   login: async (data: AdminLoginData): Promise<AdminAuthResponse> => {
     try {
-      const response = await apiClient.post('/auth/admin/login', data)
+      const response = await apiClient.post('/api/auth/admin/login', data)
       return response.data
     } catch (error) {
       console.error('Admin login error:', error)

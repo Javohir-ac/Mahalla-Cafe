@@ -45,7 +45,7 @@ export const recipeService = {
         },
       }
 
-      const response = await apiClient.get('/recipes', config)
+      const response = await apiClient.get('/api/recipes', config)
       return response.data
     } catch (error) {
       console.error('Get recipes error:', error)
@@ -67,7 +67,7 @@ export const recipeService = {
         },
       }
 
-      const response = await apiClient.get(`/recipes/${id}`, config)
+      const response = await apiClient.get(`/api/recipes/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Get recipe error:', error)
@@ -89,7 +89,7 @@ export const recipeService = {
         },
       }
 
-      const response = await apiClient.post('/recipes', recipe, config)
+      const response = await apiClient.post('/api/recipes', recipe, config)
       return response.data
     } catch (error) {
       console.error('Create recipe error:', error)
@@ -111,7 +111,7 @@ export const recipeService = {
         },
       }
 
-      const response = await apiClient.put(`/recipes/${id}`, recipe, config)
+      const response = await apiClient.put(`/api/recipes/${id}`, recipe, config)
       return response.data
     } catch (error) {
       console.error('Update recipe error:', error)
@@ -133,7 +133,7 @@ export const recipeService = {
         },
       }
 
-      const response = await apiClient.delete(`/recipes/${id}`, config)
+      const response = await apiClient.delete(`/api/recipes/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Delete recipe error:', error)

@@ -36,7 +36,7 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true)
 
     try {
-      const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
+      const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
 
       // Remove trailing slash if present to prevent double slashes in URLs
       const normalizedBaseUrl = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL

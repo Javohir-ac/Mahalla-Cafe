@@ -355,8 +355,8 @@ const AdminMenu: React.FC = () => {
                   src={
                     item.image?.startsWith('/uploads/')
                       ? `${(
-                          process.env.REACT_APP_API_URL || 'http://localhost:5000/api'
-                        ).replace('/api', '')}${item.image}`
+                          process.env.REACT_APP_API_URL || 'http://localhost:5000'
+                        ).replace(/\/$/, '')}${item.image}`
                       : item.image || '/assets/placeholder.jpg'
                   }
                   alt={item.name}
@@ -453,9 +453,8 @@ const AdminMenu: React.FC = () => {
                         src={
                           item.image?.startsWith('/uploads/')
                             ? `${(
-                                process.env.REACT_APP_API_URL ||
-                                'http://localhost:5000/api'
-                              ).replace('/api', '')}${item.image}`
+                                process.env.REACT_APP_API_URL || 'http://localhost:5000'
+                              ).replace(/\/$/, '')}${item.image}`
                             : item.image || '/assets/placeholder.jpg'
                         }
                         alt={item.name}

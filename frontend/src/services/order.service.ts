@@ -47,7 +47,7 @@ export const orderService = {
         },
       }
 
-      const response = await apiClient.get('/orders', config)
+      const response = await apiClient.get('/api/orders', config)
       return response.data
     } catch (error) {
       console.error('Get orders error:', error)
@@ -69,7 +69,7 @@ export const orderService = {
         },
       }
 
-      const response = await apiClient.get(`/orders/${id}`, config)
+      const response = await apiClient.get(`/api/orders/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Get order error:', error)
@@ -91,7 +91,7 @@ export const orderService = {
         },
       }
 
-      const response = await apiClient.put(`/orders/${id}`, { status }, config)
+      const response = await apiClient.put(`/api/orders/${id}`, { status }, config)
       return response.data
     } catch (error) {
       console.error('Update order error:', error)
@@ -113,7 +113,7 @@ export const orderService = {
         },
       }
 
-      const response = await apiClient.delete(`/orders/${id}`, config)
+      const response = await apiClient.delete(`/api/orders/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Delete order error:', error)

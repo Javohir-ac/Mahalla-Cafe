@@ -59,7 +59,7 @@ export const dashboardService = {
         },
       }
 
-      const response = await apiClient.get('/dashboard/stats', config)
+      const response = await apiClient.get('/api/dashboard/stats', config)
       return response.data
     } catch (error) {
       console.error('Get dashboard stats error:', error)

@@ -30,8 +30,8 @@ const MenuCard: React.FC<MenuCardProps> = ({
 
   // Construct full image URL if it's a relative path
   const fullImageUrl = image?.startsWith('/uploads/')
-    ? `${(process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(
-        '/api',
+    ? `${(process.env.REACT_APP_API_URL || 'http://localhost:5000').replace(
+        /\/$/,
         ''
       )}${image}`
     : image

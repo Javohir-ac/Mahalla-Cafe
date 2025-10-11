@@ -55,7 +55,7 @@ export const activityService = {
         },
       }
 
-      const response = await apiClient.get('/activity', config)
+      const response = await apiClient.get('/api/activity', config)
       const result = response.data
 
       // Normalize the data to ensure consistent structure
@@ -88,7 +88,7 @@ export const activityService = {
         },
       }
 
-      const response = await apiClient.get(`/activity/${id}`, config)
+      const response = await apiClient.get(`/api/activity/${id}`, config)
       const result = response.data
 
       // Normalize the data to ensure consistent structure
@@ -117,7 +117,7 @@ export const activityService = {
         },
       }
 
-      const response = await apiClient.delete(`/activity/${id}`, config)
+      const response = await apiClient.delete(`/api/activity/${id}`, config)
       return response.data
     } catch (error) {
       console.error('Delete activity log error:', error)
