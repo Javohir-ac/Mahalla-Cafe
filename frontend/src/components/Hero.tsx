@@ -100,7 +100,7 @@ const Hero: React.FC = () => {
               </motion.button>
             </Link>
 
-            <Link to='/contact'>
+            <Link to='/reservation'>
               <motion.button
                 className={styles.secondaryButton}
                 whileHover={{

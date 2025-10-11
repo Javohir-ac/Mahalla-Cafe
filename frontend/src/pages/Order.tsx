@@ -121,7 +121,7 @@ const Order: React.FC = () => {
         name: orderData.name,
         phone: orderData.phone,
         address: orderData.address,
-        product: 'Online buyurtma',
+        product: cartItems.map(item => item.title).join(', '),
         note: orderData.note,
         cartItems: formattedCartItems,
       }
