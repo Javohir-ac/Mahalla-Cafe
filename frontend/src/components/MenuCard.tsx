@@ -10,7 +10,12 @@ interface MenuCardProps {
   title: string
   description: string
   price?: string
-  onAddToCart?: (item: { id: string; title: string; price?: string }) => void
+  onAddToCart?: (item: {
+    id: string
+    title: string
+    price?: string
+    image: string
+  }) => void
   onViewRecipe?: (item: { id: string; title: string; price?: string }) => void
   showAddToCart?: boolean
 }
@@ -38,7 +43,7 @@ const MenuCard: React.FC<MenuCardProps> = ({
 
     setIsAdding(true)
     setButtonText("Qo'shildi!")
-    onAddToCart({ id, title, price })
+    onAddToCart({ id, title, price, image: fullImageUrl })
 
     setTimeout(() => {
       setIsAdding(false)

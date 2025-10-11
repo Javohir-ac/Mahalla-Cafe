@@ -94,7 +94,12 @@ const Menu: React.FC = () => {
   })
 
   // Handle adding item to cart
-  const handleAddToCart = (item: { id: string; title: string; price?: string }) => {
+  const handleAddToCart = (item: {
+    id: string
+    title: string
+    price?: string
+    image: string
+  }) => {
     // Get current cart from localStorage
     const currentCart = localStorage.getItem('mahallaCart')
     const cartItems = currentCart ? JSON.parse(currentCart) : []
@@ -109,13 +114,9 @@ const Menu: React.FC = () => {
       cartItems[existingItemIndex].quantity += 1
     } else {
       // If item doesn't exist, add new item
-      // Find the full item data to get the image
-      const fullItem = menuItems.find(menuItem => menuItem.id === item.id)
-
       cartItems.push({
         ...item,
         quantity: 1,
-        image: fullItem?.imageUrl || fullItem?.image || '', // Use imageUrl or fallback to image
       })
     }
 
