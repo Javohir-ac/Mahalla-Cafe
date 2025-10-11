@@ -235,7 +235,10 @@ const AdminMenu: React.FC = () => {
     const matchesSearch =
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter
+    const matchesCategory =
+      categoryFilter === 'all' ||
+      categoryFilter === 'Barchasi' ||
+      item.category === categoryFilter
     return matchesSearch && matchesCategory
   })
 
